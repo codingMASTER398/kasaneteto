@@ -1,0 +1,51 @@
+body{
+  font-family: "ZenKakuGothicNew";
+  background: linea;
+
+  margin-top: 2rem;
+}
+
+navigation {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 6rem;
+  gap: 32px;
+
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+  color: white;
+}
+
+navigation::before{
+  position: absolute;
+  height: 70%;
+  top: 15%;
+  width: 100%;
+  background-color: #456072;
+  content: "";
+  z-index: -1;
+  border-radius: 12px;
+  box-shadow: 0 0 16px #8f9caa inset, 0 20px 30px rgba(155,100,100,0.4);
+  outline: 6px dotted #cc495e;
+  outline-offset: -3px;
+}
+
+navigation img{
+  height: 100%;
+}
+
+navigation a {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #eee;
+}
+navigation a.selected{
+  color: #e9607a;
+  filter: drop-shadow(0 0 3px black);
+}
+navigation a:not(:visited) {
+  color: white;
+}

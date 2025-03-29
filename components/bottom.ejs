@@ -1,0 +1,28 @@
+<script>
+  let all_links = document.querySelectorAll("a");
+
+  for (let index in all_links) {
+    try {
+      if (!all_links[index].href.startsWith(window.location.origin))
+        all_links[index].setAttribute("target", "_blank");
+    } catch (error) {
+      //console.log(error);
+    }
+  }
+</script>
+
+<br />
+<br />
+<br />
+
+<footer>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="margin: 0;">
+    <path fill="#e24666" fill-opacity="1" d="M0,224L160,224L320,32L480,160L640,192L800,288L960,256L1120,160L1280,224L1440,32L1440,320L1280,320L1120,320L960,320L800,320L640,320L480,320L320,320L160,320L0,320Z"></path>
+  </svg>
+  <div class="footerFill">
+    <h3><a href="https://kasanete.to">KASANETE.TO</a>!!!</h3>
+    <p>This work is licensed under CC BY-NC-SA 4.0. Created by <a href="https://coding398.dev">coding398</a>.</p>
+    <p>This website is purely fan-made and is in no way associated with TWINDRILL or Crypton Future Media, Inc.</p>
+    <p>Open-source soon!</p>
+  </div>
+</footer>

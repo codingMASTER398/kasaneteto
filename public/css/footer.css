@@ -1,0 +1,42 @@
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0px;
+
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+footer svg{
+  position: relative;
+  bottom: -3px;
+  filter: drop-shadow(0 -12px 12px rgba(226, 70, 102, 0.3))
+}
+
+.footerFill {
+  width: 100%;
+  min-height: 100px;
+  background-color: #e24666;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 6rem;
+  padding-right: 6rem;
+  padding-bottom: 6rem;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.footerFill a {
+  color: white;
+}
+
+.footerFill * {
+  margin: 0;
+}

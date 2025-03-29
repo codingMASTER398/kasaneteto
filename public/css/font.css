@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "ZenKakuGothicNew"; /* Choose a descriptive name */
+  src: url("/font/ZenKakuGothicNew-Regular.ttf") format("truetype"); /* Replace with the actual file path and format */
+  font-weight: 400; /* Normal weight */
+  font-style: normal; /* Normal style */
+}
+
+@font-face {
+  font-family: "ZenKakuGothicNew"; /* Same font-family name */
+  src: url("/font/ZenKakuGothicNew-Bold.ttf") format("truetype"); /* Bold font */
+  font-weight: 700; /* Bold weight */
+  font-style: normal; /* Normal style */
+}
+
+@font-face {
+  font-family: "ZenKakuGothicNew"; /* Same font-family name */
+  src: url("/font/ZenKakuGothicNew-Light.ttf") format("truetype"); /* Light font */
+  font-weight: 300; /* Light weight */
+  font-style: normal; /* Normal style */
+}
+
+@font-face {
+  font-family: "ZenKakuGothicNew";
+  src: url("/font/ZenKakuGothicNew-Black.ttf") format("truetype"); /*Italic font*/
+  font-weight: 900;
+}

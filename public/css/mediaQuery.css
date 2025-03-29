@@ -1,0 +1,120 @@
+/* the bane of my existence */
+
+@media only screen and (max-width: 1714px) {
+  .mainContentPad {
+    margin-left: 5vw;
+    margin-right: 5vw;
+    width: 90vw;
+  }
+
+  .readingAside {
+    margin-left: 0vw;
+    margin-right: 0vw;
+  }
+
+  .readingFull {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 1227px) {
+  .readingAside .aside {
+    max-width: 30%;
+  }
+  
+  .readingAside .reading {
+    max-width: 70%;
+  }
+}
+
+@media only screen and (max-width: 1000px) { 
+  /* Jarvis, we are on mobile */
+  .heroBanner {
+    content: url("/img/mobileVariant/banner.png");
+  }
+
+  /* Reading aside (hero too) */
+
+  .readingAside {
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 64px;
+  }
+
+  .readingAside .aside {
+    max-width: 100%;
+  }
+  
+  .readingAside .reading {
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Reading two split */
+
+  .readingTwoSplit{
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .keyart{
+    max-height: 500px;
+  }
+
+  .readingTwoSplit .reading {
+    max-width: 100%;
+  }
+
+  /* divisors */
+
+  .divisorMiddle {
+    background-color: rgb(235, 97, 123);
+    width: 90%;
+    height: 3px;
+    box-sizing: border-box;
+  }
+
+  /* nav */
+  navigation {
+    flex-wrap: wrap;
+    max-height: 1000px;
+    height: auto;
+  }
+  navigation img{
+    width: 100%;
+    height: 128px;
+  }
+
+  navigation::before{
+    height: 100%;
+    top: 32px;
+  }
+
+  /* footer */
+  .footerFill {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* tiny screen */
+@media only screen and (max-width: 750px) {
+  .triSplit {
+    flex-wrap: wrap;
+  }
+
+  .readingFull {
+    margin-left: 0vw;
+    margin-right: 0vw;
+    width: 90vw;
+  }
+
+  navigation, footer { 
+    margin: 0;
+  }
+}

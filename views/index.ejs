@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../components/head') -%>
+  </head>
+  <body>
+    <%- include('../components/titlebar') -%>
+
+    <script>
+      document.querySelector(`navigation .mainPage`).classList.add("selected")
+    </script>
+
+    <div class="mainContentPad">
+      <div class="readingAside">
+        <div class="aside">
+          <img src="./img/banner.png" class="big heroBanner">
+        </div>
+        <div class="reading">
+          <h1>WELCOME TO KASANETE.TO! <sparkle>✨</sparkle></h1>
+          <p>A <b>fan-made</b> host of various <a href="https://kasaneteto.jp/">Kasane Teto</a>-related things, including fanart, music, archives, and more!
+          <br><br>The website is still under development, though! If you have any feedback ideas, comment <a href="https://www.reddit.com/r/AlarmoffTeto/comments/1jmg3d9/the_urge_to_buy_this_what_should_i_put_on_there/">here</a>.</p>
+          <p>You are the <%=viewers%> person to visit since the site restarted!!</p>
+          <br>
+          <img src="/img/fukkireta.gif" class="fukkireta">
+        </div>
+      </div>
+
+      <br>
+
+      <div class="breadDivisor"></div>
+
+      <br>
+
+      <div class="readingTwoSplit">
+        <div class="reading">
+          <h1>Who is <span style="color: rgb(235, 97, 123);">Kasane Teto</span>?</h1>
+          <p><b>Kasane Teto</b> is a fictional Japanese VOCALOID-inspired character known for her distinctive twin-drill hairstyle and voicebank!<br><br>She was originally created as a prank character for a Japanese textboard and later gained popularity within the community. While not officially a VOCALOID, she has SynthV and UTAU synthesizer software, allowing fans to create music featuring her voice.</p>
+          <p>You may recognise her from fan-made songs such as <a href="https://www.youtube.com/watch?v=kuNixp-wvWM">Fukkireta</a>, <a href="https://www.youtube.com/watch?v=duPJqfKiA78">Triple Baka</a>, <a href="https://www.youtube.com/watch?v=JALbemLw3G4">Kasane Territory</a>, or more recently- <a href="https://www.youtube.com/watch?v=19y8YTbvri8">Mesmeriszer</a>!</p>
+        </div>
+        <div class="divisorMiddleWrapper">
+          <div class="divisorMiddle"></div>
+        </div>
+        <div class="reading">
+          <h1>Key art</h1>
+          <div class="keyart">
+            <div><img src="/img/keyart/1.webp" alt="Kasane Teto's current official illustration"></div>
+            <div><img src="/img/keyart/2.webp" alt="Kasane Teto's Synthesizer V illustration"></div>
+            <div><img src="/img/keyart/3.webp" alt="Kasane Teto's official illustration from 2008"></div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="breadDivisor"></div>
+
+      <br>
+
+      <div class="readingFull" style="text-align: center;">
+        <h1>MORE KASANE TETO!</h1>
+        <div class="triSplit">
+          <div class="triContent">
+            <h3>FORUMS</h3>
+            <a href="https://www.reddit.com/r/KasaneTeto/">r/KasaneTeto</a>
+            <a href="https://www.reddit.com/r/AlarmoffTeto/">r/AlarmoffTeto</a>
+            <a href="https://discord.com/invite/Ws2ypF2TqR">Kasane Teto Discord</a>
+            <a href="https://utaforum.net/tags/kasane-teto/">UTAForum.net</a>
+          </div>
+          <div class="divisorMiddleWrapper">
+            <div class="divisorMiddle"></div>
+          </div>
+          <div class="triContent">
+            <h3>OFFICIAL</h3>
+            <a href="https://kasaneteto.jp/">kasaneteto.jp</a>
+            <a href="https://www.youtube.com/user/twindrillteto">YouTube @ twindrillteto</a>
+            <a href="https://x.com/twindrill_teto">Twitter @ twindrill_teto</a>
+            <a href="https://kasaneteto.jp/goods/">Official merchandise</a>
+          </div>
+          <div class="divisorMiddleWrapper">
+            <div class="divisorMiddle"></div>
+          </div>
+          <div class="triContent">
+            <h3>SONG PLAYLISTS</h3>
+            <a href="https://music.youtube.com/playlist?list=PL1dGKN09sRtU299Em9Vil5lYeMDUJSzK1">YouTube Music</a>
+            <a href="https://open.spotify.com/playlist/1dQJg6yVcZNHj9QKgM7Kmj">Spotify</a>
+            <a href="https://music.apple.com/us/artist/kasane-teto/473862838">Apple Music</a>
+            <a href="https://tidal.com/browse/artist/13069857">TIDAL</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../components/bottom') -%>
+  </body>
+</html>
