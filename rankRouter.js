@@ -103,6 +103,20 @@ router.post(`/choose/:choice/:token`, (req, res)=>{
   res.send("Counted")
 })
 
+function calcTotalVotes() {
+  let tv = 0;
+
+  Object.keys(db).forEach((v)=>{
+    if(v == "totalVotes") return;
+    tv += db[v].pos + db[v].neg
+  })
+
+  db.totalVotes = tv;
+}
+
+setInterval(calcTotalVotes, 30_000)
+calcTotalVotes()
+
 module.exports = {
   router, updateSongs, getVotesDb: ()=>{
     return db;
