@@ -48,7 +48,7 @@ module.exports = () => {
 
     videos.forEach((v) => {
       // Add them to the full array
-      if (!allVideos.find((vv) => vv.url == v.url)) allVideos.push(v);
+      if (!allVideos.find((vv) => vv.id == v.id)) allVideos.push(v);
     });
 
     console.log(`Loaded ${playlistUrls[i]}, ${i + 1}/${playlistUrls.length}`);
