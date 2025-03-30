@@ -9,7 +9,17 @@ Object.keys(votes).forEach((v)=>{
     return;
   }
 
-  songs[songIndex].vote = votes[v].perc
+  /*songs[songIndex].vote = (100 * (votes[v].pos)) / (votes[v].pos + votes[v].neg)
+  songs[songIndex].learning = (votes[v].pos + votes[v].neg) == 10
+  if((votes[v].pos + votes[v].neg) < 4) songs[songIndex].vote = -1;*/
+
+  songs[songIndex].vote = (100 * (votes[v].pos)) / (votes[v].pos + votes[v].neg)
+
+  if((votes[v].pos + votes[v].neg) < 8) {
+    songs[songIndex].learning = true;
+  }
+
+  if((votes[v].pos + votes[v].neg) < 4) songs[songIndex].vote = -1;
 })
 
 songs.sort((a, b) => (b.vote || 0) - (a.vote || 0)).forEach((song, i) => {
@@ -27,9 +37,14 @@ songs.sort((a, b) => (b.vote || 0) - (a.vote || 0)).forEach((song, i) => {
   const vote = document.createElement(`p`)
   vote.classList.add("vote")
 
-  vote.innerText = typeof song.vote === "number" ? ("#" + (i + 1) + ", " + (song.vote.toFixed(1)) + "%") : "Unknown";
+  vote.innerText = (typeof song.vote === "number" && song.vote != -1) ? ("#" + (i + 1) + ", " + (song.vote.toFixed(1)) + "%") : "???%";
 
-  if(typeof song.vote === "undefined"){
+  if(song.learning) {
+    vote.classList.add("learning")
+    vote.innerText += "??"
+  }
+
+  if(typeof song.vote === "undefined" || song.vote == -1){
 
   } else if(i == 0) {
     vote.classList.add("first")
