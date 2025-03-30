@@ -8,6 +8,7 @@ const playlistUrls = [
   "https://music.youtube.com/playlist?list=PLBogHLCY5IFxtcGfRECcG97P4AHoKBl8I", // more teto.
   "https://music.youtube.com/playlist?list=PL0jq6mGkDwfzuOqrEDfNd-5sJUTxJy7n5", // more teto.
   "https://music.youtube.com/playlist?list=PLlBxB5S0GPa9shVv5dSeSWiw0lcpmLoTR", // my extra songs playlist just in case
+  "https://www.youtube.com/playlist?list=PLFUvuG19TifkUT8X2LNGEc-HNahD_envA" // KaisoRain's playlist
 ];
 
 const excludeList =

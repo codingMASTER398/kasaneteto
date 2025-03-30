@@ -161,4 +161,6 @@ button:active{
 iframe{
   max-width: 100%;
   width: 40%;
+  border: none;
+  border-radius: 3px;
 }

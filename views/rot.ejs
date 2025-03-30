@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../components/head') -%>
+
+    <title>kasanete.to</title>
+    <meta
+      name="description"
+      content="kasanete.to is a fan-made website dedicated to Kasane Teto, featuring fanart, music, archives, and more! This site is currently under development."
+    />
+    <meta
+      name="keywords"
+      content="Kasane Teto, 歌音テト, Uta no Teto, fanart, music, archives, virtual singer, fan-made, community, website"
+    />
+    <meta
+      name="author"
+      content="coding398 & kasanete.to Community (Fan-made)"
+    />
+    <meta
+      property="og:title"
+      content="kasanete.to - Fan-made Kasane Teto Website"
+    />
+    <meta
+      property="og:description"
+      content="Explore fanart, music, archives, and more dedicated to Kasane Teto on kasanete.to! A fan-made website currently under development."
+    />
+    <meta property="og:image" content="https://kasanete.to/img/fukkireta.gif" />
+  </head>
+  <body>
+    <%- include('../components/titlebar') -%>
+
+    <script>
+      document.querySelector(`navigation .rot`).classList.add("selected");
+    </script>
+
+    <div class="mainContentPad">
+      <div class="center"><h1>Stare into the abyss</h1></div>
+      <img src="/img/mesmerizer.png" id="mesmerizer">
+      <div class="triSplit">
+        <div class="triContent">
+          <iframe src="https://youtube.com/embed/1xEfMnXyGkA?autoplay=1"></iframe>
+          <iframe src="https://youtube.com/embed/F38EuG2dAyM?autoplay=1"></iframe>
+          <iframe src="https://youtube.com/embed/dbfFDAHmP_c?autoplay=1"></iframe>
+        </div>
+        <div class="divisorMiddleWrapper">
+          <div class="divisorMiddle"></div>
+        </div>
+        <div class="triContent">
+          <iframe src="https://youtube.com/embed/sqK-jh4TDXo?autoplay=1"></iframe>
+          <iframe src="https://youtube.com/embed/19y8YTbvri8?autoplay=1"></iframe>
+          <iframe src="https://youtube.com/embed/4aFC2oC-wHA?autoplay=1"></iframe>
+        </div>
+        <div class="divisorMiddleWrapper">
+          <div class="divisorMiddle"></div>
+        </div>
+        <div class="triContent">
+          <iframe src="https://youtube.com/embed/uvxoNlMqilg?autoplay=1"></iframe>
+          <iframe src="https://youtube.com/embed/v1TaIfKctPo?autoplay=1"></iframe>
+          <iframe src="https://youtube.com/embed/n1nKVZPd_x4?autoplay=1"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      iframe{ width: 100%; aspect-ratio: 16/9; }
+      #mesmerizer{
+        position: absolute;
+        left: 50%;
+        top: 80%;
+        transform: translate(-50%, -50%);
+        animation: mesmerize 0.25s infinite;
+        transform-origin: center;
+        z-index: 999;
+        opacity: 0.5;
+      }
+      @keyframes mesmerize {
+        0%{
+          transform: translate(-50%, -50%) rotate(0deg) scale(0.9);
+        }
+        100%{
+          transform: translate(-50%, -50%) rotate(30deg);
+        }
+      }
+      body{
+        animation: fade 10s forwards;
+        animation-delay: 10s;
+      }
+
+      @keyframes fade {
+        100%{
+          background-color: black;
+        }
+      }
+    </style>
+
+    <%- include('../components/bottom') -%>
+  </body>
+</html>

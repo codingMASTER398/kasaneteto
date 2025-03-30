@@ -50,6 +50,11 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/rot", (req, res) => {
+  res.render("rot.ejs", {
+  });
+});
+
 app.get("/songs", (req, res) => {
   res.render("songs.ejs", {
     tetoSongs,
