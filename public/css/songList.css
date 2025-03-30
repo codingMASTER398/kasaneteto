@@ -1,0 +1,110 @@
+.song {
+  padding: 12px;
+  padding-left: 24px;
+  padding-right: 24px;
+  background: rgba(255,255,255,0.3);
+  border-bottom: 2px solid #e85e79;
+  max-height: 8rem;
+  position: relative;
+}
+
+.song img {
+  margin-right: 32px;
+  height: 6rem;
+  float: left;
+}
+
+.song a {
+  font-size: x-large;
+}
+
+.song[visible="false"] {
+  display: none;
+}
+
+.song .vote {
+  position: absolute;
+  bottom: 0;
+  right: 12px;
+  
+  background-color: grey;
+  border-radius: 3px;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-weight: 900;
+}
+
+.vote.first {
+  background-color: #e85e79;
+  box-shadow: 0 0 24px #e85e79;
+  color:  white;
+  outline: 2px solid white;
+}
+
+.vote.v90 {
+  background-color: #e85e79;
+  color:  white;
+}
+.vote.v80 {
+  background-color: #ee728b;
+  color:  white;
+}
+.vote.v70 {
+  background-color: #f08197;
+  color:  white;
+}
+.vote.v60 {
+  background-color: #f59cae;
+  color:  white;
+}
+.vote.v50 {
+  background-color: white;
+  color:  black;
+}
+.vote.v40 {
+  background-color: rgb(136, 136, 235);
+  color:  white;
+}
+.vote.v30 {
+  background-color: rgb(96, 96, 212);
+  color:  white;
+}
+.vote.v20 {
+  background-color: rgb(66, 66, 209);
+  color:  white;
+}
+.vote.v10 {
+  background-color: rgb(51, 51, 194);
+  color:  white;
+}
+.vote.v0 {
+  background-color: rgb(34, 34, 158);
+  color:  white;
+}
+
+@media only screen and (max-width: 1000px) { 
+  .readingAsideSongs {
+    flex-direction: column;
+  }
+
+  .readingAsideSongs .aside {
+    max-width: 100%;
+  }
+  
+  .readingAsideSongs .reading {
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 736px) {
+  .song {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-height: none;
+  }
+  .song img {
+    object-fit: contain;
+  }
+}

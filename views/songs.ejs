@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../components/head') -%>
+
+    <link rel="stylesheet" href="/css/songList.css" />
+
+    <title>Kasane Teto songs</title>
+    <meta
+      name="description"
+      content="kasanete.to - Comprehensive song list of Kasane Teto music"
+    />
+    <meta
+      name="keywords"
+      content="Kasane Teto, 歌音テト, Uta no Teto, fanart, music, archives, virtual singer, fan-made, community, website"
+    />
+    <meta
+      name="author"
+      content="coding398 & kasanete.to Community (Fan-made)"
+    />
+    <meta property="og:title" content="kasanete.to - Song list" />
+    <meta
+      property="og:description"
+      content="Comprehensive song list of Kasane Teto music"
+    />
+    <meta property="og:image" content="https://kasanete.to/img/fukkireta.gif" />
+  </head>
+  <body>
+    <%- include('../components/titlebar') -%>
+
+    <div class="mainContentPad">
+      <div class="center">
+        <h1>
+          <a href="/" style="color: rgb(235, 97, 123)">Kasane Teto</a> song list
+          <sparkle>✨</sparkle>
+        </h1>
+        <p>
+          A comprohensive list of Kasane Teto songs, covers, and collaborations
+          with other 'loids.
+        </p>
+        <p>There is also a ranking system, and you can vote for songs <a href="/rank">here</a>. Songs with less than 10 votes cannot get 100%.</p>
+      </div>
+
+      <div class="readingAsideSongs">
+        <div class="aside">
+          <h3>Search</h3>
+          <input type="text" id="searchBox" />
+
+          <h3>Filter by artist</h3>
+
+          <select name="artists" id="artists">
+            <option value="">None</option>
+          </select>
+        </div>
+        <div class="reading songList"></div>
+      </div>
+    </div>
+
+    <script>
+      document.querySelector(`navigation .songs`).classList.add("selected");
+      const songs = <%-JSON.stringify(tetoSongs)%>;
+      const votes = <%-JSON.stringify(votes)%>;
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.2/dist/umd/index.min.js"></script>
+    <script src="/js/songList.js"></script>
+
+    <%- include('../components/bottom') -%>
+  </body>
+</html>

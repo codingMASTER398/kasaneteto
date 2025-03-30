@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../components/head') -%>
+
+    <link rel="stylesheet" href="/css/songList.css" />
+
+    <title>Kasane Teto song ranker</title>
+    <meta name="description" content="kasanete.to - Rank" />
+    <meta
+      name="keywords"
+      content="Kasane Teto, 歌音テト, Uta no Teto, fanart, music, archives, virtual singer, fan-made, community, website"
+    />
+    <meta
+      name="author"
+      content="coding398 & kasanete.to Community (Fan-made)"
+    />
+    <meta property="og:title" content="kasanete.to - Rank" />
+    <meta property="og:description" content="Rank random Kasane Teto songs" />
+    <meta property="og:image" content="https://kasanete.to/img/fukkireta.gif" />
+  </head>
+  <body>
+    <%- include('../components/titlebar') -%>
+
+    <div class="mainContentPad">
+      <div class="center">
+        <h1>The Amazing Kasane Ranker</h1>
+        <p>
+          You'll listen to two songs, then decide which one is better. You can
+          then view a compiled rank from everyone at
+          <a href="/songs">the song list</a>.
+        </p>
+
+        <div>
+          <iframe
+            id="ytplayer"
+            type="text/html"
+            width="640"
+            height="360"
+            src="https://www.youtube.com/embed"
+            frameborder="0"
+          ></iframe>
+          <iframe
+            id="ytplayer"
+            type="text/html"
+            width="640"
+            height="360"
+            src="https://www.youtube.com/embed"
+            frameborder="0"
+          ></iframe>
+        </div>
+
+        <br>
+
+        <div>
+          <button onclick="window.leftClick()">LEFT IS BETTER</button>
+          <button onclick="window.noClick()">CAN'T DECIDE</button>
+          <button onclick="window.rightClick()">RIGHT IS BETTER</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.querySelector(`navigation .rank`).classList.add("selected");
+    </script>
+    <script src="/js/kasaneRanker.js"></script>
+
+    <%- include('../components/bottom') -%>
+  </body>
+</html>
