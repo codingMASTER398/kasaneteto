@@ -19,7 +19,9 @@ async function downloadThumbnail(videoId, filename = "thumbnail.jpg") {
     fileStream.on("finish", () => {
       console.log(`Thumbnail saved as ${filename}`);
     });
-  } catch {}
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 module.exports = () => {

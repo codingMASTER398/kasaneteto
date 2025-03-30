@@ -56,7 +56,7 @@ module.exports = () => {
   // Write the whole array
 
   require(`fs`).writeFileSync(
-    `./kasaneTetoSongs.json`,
+    `./util/kasaneTetoSongs.json`,
     JSON.stringify(allVideos)
   );
 
