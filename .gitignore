@@ -2,3 +2,4 @@ node_modules
 db
 dbb
 public/img/songThumbnails
+util/kasaneTetoSongs.json
