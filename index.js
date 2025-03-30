@@ -3,6 +3,8 @@ const app = express();
 const utilsPlaylist = require(`./util/playlist`);
 const rankRouter = require(`./rankRouter`);
 const fs = require(`fs`)
+const { spawn } = require('child_process');
+const path = require('path');
 
 let tetoSongs = require(`./util/kasaneTetoSongs.json`);
 
@@ -21,17 +23,27 @@ function getNumberWithOrdinal(n) {
 function refreshTetoSongs() {
   console.log("Refreshing teto songs through playlists...");
 
-  tetoSongs = utilsPlaylist();
-  rankRouter.updateSongs(tetoSongs);
-
-  try {
-    require(`./util/downloadThumbnails`)();
-  } catch (e) {
-    console.log(e);
-  }
-
-  console.log("Done");
+  const child = spawn('node', [path.join(__dirname, 'util', 'playlistCMD.js')], {
+    cwd: process.cwd(), // Maintain the same working directory
+    stdio: 'inherit' // Inherit standard IO (logs will show in the main process)
+  });
+  
+  child.on('error', (err) => console.error('Child Process Error:', err));
+  
+  child.on('exit', (code) => {
+    if (code !== 0) {
+      console.error(`Child process exited with code ${code}`);
+    }
+  });
 }
+
+setInterval(()=>{
+  const s = require(`./util/kasaneTetoSongs.json`);
+  tetoSongs = s;
+  rankRouter.updateSongs(tetoSongs)
+}, 100_000)
+
+refreshTetoSongs()
 
 let visits;
 try{
