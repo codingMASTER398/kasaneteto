@@ -4,8 +4,9 @@ let artists = [];
 
 Object.keys(votes).forEach((v)=>{
   const songIndex = songs.indexOf(songs.find((s)=>s.id == v))
-  if(!songIndex) {
+  if(songIndex == -1) {
     console.log(`Vote but no video for ${v}`)
+    return;
   }
 
   songs[songIndex].vote = votes[v].perc
