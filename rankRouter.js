@@ -26,7 +26,7 @@ function updateSongs(s) {
 
 // Route
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 1 minutes
+	windowMs: 1 * 60 * 1000, // 1 minutes
 	limit: 10, // Limit each IP to 00 requests per `window` (here, per 1 minute).
 })
 
