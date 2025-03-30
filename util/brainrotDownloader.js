@@ -1,2 +1,0 @@
-const hasSimilarImage = require(`./hasSimilarImage`)
-
