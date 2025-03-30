@@ -33,23 +33,23 @@ songs.sort((a, b) => (b.vote || 0) - (a.vote || 0)).forEach((song, i) => {
 
   } else if(i == 0) {
     vote.classList.add("first")
-  } else if(song.vote > 90) {
+  } else if(song.vote >= 90) {
     vote.classList.add("v90")
-  } else if(song.vote > 80) {
+  } else if(song.vote >= 80) {
     vote.classList.add("v80")
-  } else if(song.vote > 70) {
+  } else if(song.vote >= 70) {
     vote.classList.add("v70")
-  } else if(song.vote > 60) {
+  } else if(song.vote >= 60) {
     vote.classList.add("v60")
-  } else if(song.vote > 50) {
+  } else if(song.vote >= 50) {
     vote.classList.add("v50")
-  } else if(song.vote > 40) {
+  } else if(song.vote >= 40) {
     vote.classList.add("v40")
-  } else if(song.vote > 30) {
+  } else if(song.vote >= 30) {
     vote.classList.add("v30")
-  } else if(song.vote > 20) {
+  } else if(song.vote >= 20) {
     vote.classList.add("v20")
-  } else if(song.vote > 10) {
+  } else if(song.vote >= 10) {
     vote.classList.add("v10")
   } else vote.classList.add("v0")
 
