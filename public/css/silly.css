@@ -77,3 +77,29 @@ sparkle {
   width: 100%;
   object-fit: contain;
 }
+
+iframe.bounce {
+  animation: frameBounce 1s forwards;
+}
+iframe:nth-child(2).bounce {
+  animation: frameBounce 1.4s forwards;
+}
+
+@keyframes frameBounce {
+  0%{
+    opacity: 0.01;
+  }
+  50%{
+    scale: 0;
+    rotate: 10deg;
+    opacity: 0;
+  }
+}
+
+iframe.selected {
+  transform: scale(1.1);
+  box-shadow: 0 0 48px rgb(235, 97, 123);
+  transition: 0.5s;
+  rotate: -1deg;
+  z-index: 99999;
+}

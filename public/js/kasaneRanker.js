@@ -18,6 +18,7 @@ class rankerNet {
 
           this.data = await r.json();
           resolve();
+          shuffle.play()
         })
         .catch((e) => {
           alert(e);
@@ -25,7 +26,7 @@ class rankerNet {
         });
     });
   }
-  choose(option){
+  choose(option) {
     return new Promise((resolve) => {
       fetch(`/rankRouter/choose/${option}/${this.data.token}`, {
         method: "POST",
@@ -52,7 +53,7 @@ class rankerNet {
 }
 
 function hideMain() {
-  document.querySelector(`.mainContentPad`).style.opacity = "0.5";
+  document.querySelector(`.mainContentPad`).style.opacity = "0.9";
   document.querySelector(`.mainContentPad`).style.pointerEvents = "none";
 }
 function showMain() {
@@ -62,34 +63,50 @@ function showMain() {
 
 const ranker = new rankerNet();
 
+const FA = document.querySelectorAll(`iframe`)[0],
+  FB = document.querySelectorAll(`iframe`)[1];
+
+const pop = new Audio("/sound/pop.ogg"),
+  shuffle = new Audio("/sound/shuffle.ogg")
+
 async function go() {
-  hideMain()
+  hideMain();
 
   await ranker.newRank();
 
-  document.querySelectorAll(
-    `iframe`
-  )[0].src = `https://www.youtube.com/embed/${ranker.data.A.id}?autoplay=0&fs=0`;
-  document.querySelectorAll(
-    `iframe`
-  )[1].src = `https://www.youtube.com/embed/${ranker.data.B.id}?autoplay=0&fs=0`;
+  FA.src = `https://www.youtube.com/embed/${ranker.data.A.id}?autoplay=0&fs=0`;
+  FB.src = `https://www.youtube.com/embed/${ranker.data.B.id}?autoplay=0&fs=0`;
+
+  FA.classList.remove("bounce");
+  FB.classList.remove("bounce");
+  FA.classList.remove("selected");
+  FB.classList.remove("selected");
+  FA.offsetWidth;
+  FB.offsetWidth;
+  FA.classList.add("bounce");
+  FB.classList.add("bounce");
 
   window.leftClick = async () => {
-    hideMain()
+    pop.play()
+    hideMain();
+    FA.classList.add("selected");
     await ranker.choose("left");
-    go()
+    go();
   };
   window.rightClick = async () => {
-    hideMain()
+    pop.play()
+    hideMain();
+    FB.classList.add("selected");
     await ranker.choose("right");
-    go()
+    go();
   };
 
   window.noClick = () => {
-    go()
+    pop.play()
+    go();
   };
 
-  showMain()
+  showMain();
 }
 
 go();

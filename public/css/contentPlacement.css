@@ -7,6 +7,7 @@ html {
   margin-right: 10vw;
   width: 80vw;
   margin-top: 4rem;
+  transition: 0.3s;
 }
 
 /* Reading with visual aside */
