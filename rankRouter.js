@@ -28,9 +28,15 @@ function updateSongs(s) {
 const limiter = rateLimit({
 	windowMs: 1 * 60 * 1000, // 1 minutes
 	limit: 10, // Limit each IP to 00 requests per `window` (here, per 1 minute).
+  keyGenerator: (req) => {
+    console.log(req.clientIp)
+    return req.clientIp
+  }
 })
 
 // We use tokens here to limit & obfuscate votes, such that it's difficult to artificially boost a song's ranking.
+
+router.use(require(`request-ip`).mw())
 
 router.post('/new', limiter, (req, res) => {
   const A = songs[Math.floor(Math.random() * songs.length)]
