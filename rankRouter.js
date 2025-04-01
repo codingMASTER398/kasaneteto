@@ -12,8 +12,9 @@ try{
 }
 
 function writeDb(){
-  fs.writeFileSync(`./db/votes.json`, JSON.stringify(db))
-  fs.writeFileSync(`./dbb/votes.json`, JSON.stringify(db))
+  fs.writeFile(`./db/votes.json`, JSON.stringify(db), "utf-8", ()=>{
+    fs.writeFile(`./dbb/votes.json`, JSON.stringify(db), "utf-8", ()=>{})
+  })
 }
 
 setInterval(writeDb, 10_000)

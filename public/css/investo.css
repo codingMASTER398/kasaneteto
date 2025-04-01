@@ -1,0 +1,65 @@
+.investmentsHolder {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.stock {
+  width: 200px;
+  height: 120px;
+  background-color: rgba(126, 70, 102, 0.3);
+  border-radius: 6px;
+  color: white;
+  padding: 12px;
+  background-size: cover !important;
+  background-repeat: no-repeat;
+}
+
+.stock.bounceGreen {
+  animation: stockBounceG 0.3s forwards;
+}
+.stock.bounceRed {
+  animation: stockBounceR 0.3s forwards;
+}
+
+@keyframes stockBounceG {
+  0% {
+    scale: 1.05;
+    filter: brightness(110%) hue-rotate(100deg);
+  }
+}
+@keyframes stockBounceR {
+  0% {
+    scale: 1.05;
+    filter: brightness(110%) hue-rotate(-100deg);
+  }
+}
+
+.stock h6 {
+  font-weight: 700;
+  font-size: x-small;
+  text-align: center;
+  margin: 0;
+  height: 30px;
+}
+
+.stock .chart {
+}
+
+.priceWrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.price {
+  margin: 0;
+  font-weight: 700;
+  color: #a6da95;
+}
+.price.down {
+  color: #ff5975;
+}

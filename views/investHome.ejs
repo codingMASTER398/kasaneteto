@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../components/head') -%>
+
+    <link rel="stylesheet" href="/css/investo.css" />
+
+    <title>Kasane Teto songs</title>
+    <meta
+      name="description"
+      content="kasanete.to - Comprehensive song list of Kasane Teto music"
+    />
+    <meta
+      name="keywords"
+      content="Kasane Teto, 歌音テト, Uta no Teto, fanart, music, archives, virtual singer, fan-made, community, website"
+    />
+    <meta
+      name="author"
+      content="coding398 & kasanete.to Community (Fan-made)"
+    />
+    <meta property="og:title" content="kasanete.to - Song list" />
+    <meta
+      property="og:description"
+      content="Comprehensive song list of Kasane Teto music"
+    />
+    <meta property="og:image" content="https://kasanete.to/img/fukkireta.gif" />
+  </head>
+  <body>
+    <%- include('../components/titlebar') -%>
+
+    <div class="mainContentPad">
+      <h1>kasane investo</h1>
+
+      <div class="investmentsHolder">
+
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/echarts.min.js"></script>
+    <script src="/js/investHome.js"></script>
+
+    <%- include('../components/bottom') -%>
+  </body>
+</html>

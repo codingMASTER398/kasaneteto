@@ -5,13 +5,19 @@ const rankRouter = require(`./rankRouter`);
 const fs = require(`fs`)
 const { spawn } = require('child_process');
 const path = require('path');
+const { createServer } = require('node:http');
+const investingRouter = require(`./investingRouter`);
+const server = createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server);
+require(`dotenv`).config()
 
 let tetoSongs = require(`./util/kasaneTetoSongs.json`);
 
-rankRouter.updateSongs(tetoSongs);
+rankRouter.updateSongs(tetoSongs)
+investingRouter.updateSongs(tetoSongs, process.env.YOUTUBE_API_KEY, io)
 
 app.set("view engine", "ejs");
-
 app.use(express.static("./public"));
 
 function getNumberWithOrdinal(n) {
@@ -41,9 +47,10 @@ setInterval(()=>{
   const s = require(`./util/kasaneTetoSongs.json`);
   tetoSongs = s;
   rankRouter.updateSongs(tetoSongs)
+  investingRouter.updateSongs(tetoSongs)
 }, 100_000)
 
-refreshTetoSongs()
+//refreshTetoSongs()
 
 let visits;
 try{
@@ -74,6 +81,11 @@ app.get("/songs", (req, res) => {
   });
 });
 
+app.get("/invest", (req, res) => {
+  res.render("investHome.ejs", {
+  });
+});
+
 app.get("/rank", (req, res) => {
   res.render("rank.ejs");
 });
@@ -86,4 +98,4 @@ setInterval(()=>{
   fs.writeFileSync(`./dbb/visits.json`, JSON.stringify({visits}))
 }, 10_000)
 
-app.listen(4001);
+server.listen(4001);
