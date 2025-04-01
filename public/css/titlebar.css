@@ -37,6 +37,10 @@ navigation img{
   height: 100%;
 }
 
+body.tetoDay navigation img{
+  content: url("/img/logo0401.webp");
+}
+
 navigation a {
   font-size: 1.5rem;
   font-weight: 900;
