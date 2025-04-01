@@ -38,7 +38,7 @@
           A comprohensive list of Kasane Teto songs, covers, and collaborations
           with other 'loids.
         </p>
-        <p>There is also a ranking system with <%=votes.totalVotes.toLocaleString()%> total votes! You can vote for songs yourself <a href="/rank">here</a>. Songs with less than 8 votes have a "??" at the end of their percentage.</p>
+        <p>There is also a ranking system with <%=Math.round(votes.totalVotes / 2).toLocaleString()%> total votes! You can vote for songs yourself <a href="/rank">here</a>. Songs with less than 8 votes have a "??" at the end of their percentage.</p>
       </div>
 
       <div class="readingAsideSongs">
