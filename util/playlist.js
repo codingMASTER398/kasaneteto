@@ -58,12 +58,12 @@ module.exports = () => {
 
   if(__dirname.includes("/util/")){
     require(`fs`).writeFileSync(
-      `./util/kasaneTetoSongs.json`,
+      `./kasaneTetoSongs.json`,
       JSON.stringify(allVideos)
     );
   } else {
     require(`fs`).writeFileSync(
-      `./kasaneTetoSongs.json`,
+      `./util/kasaneTetoSongs.json`,
       JSON.stringify(allVideos)
     );
   }
