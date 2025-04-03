@@ -56,17 +56,17 @@ module.exports = () => {
 
   // Write the whole array
 
-  if(__dirname.includes("/util")){
+  /*if(__dirname.includes("/util")){
     require(`fs`).writeFileSync(
       `./kasaneTetoSongs.json`,
       JSON.stringify(allVideos)
     );
-  } else {
+  } else {*/
     require(`fs`).writeFileSync(
       `./util/kasaneTetoSongs.json`,
       JSON.stringify(allVideos)
-    );
-  }
+    ); // just... just do this.
+  //}
 
   return allVideos;
 };
