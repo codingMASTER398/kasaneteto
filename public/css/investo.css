@@ -45,6 +45,7 @@
   text-align: center;
   margin: 0;
   height: 30px;
+  filter: drop-shadow(0 0 3px black);
 }
 
 .stock .chart {
@@ -63,6 +64,7 @@
   margin: 0;
   font-weight: 700;
   color: #a6da95;
+  filter: drop-shadow(0 0 3px black);
 }
 .price.down {
   color: #ff5975;

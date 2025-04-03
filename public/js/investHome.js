@@ -100,8 +100,8 @@ socket.on("baseStocks", (s) => {
     idToElem[inv.id] = element;
 
     element.style.background = `linear-gradient(
-      rgba(96, 50, 52, 0.8), 
-      rgba(96, 50, 52, 0.8)
+      rgba(96, 50, 52, 0.4), 
+      rgba(96, 50, 52, 0.4)
     ), url("/img/songThumbnails/${inv.id == "GDP" ? "../GDP" : inv.id}.jpg")`;
 
     element.style.display = "none";
@@ -145,6 +145,10 @@ socket.on("baseStocks", (s) => {
           smooth: true,
           lineStyle: { color: "#cc495e", width: 2 },
           symbol: "none",
+          areaStyle: {
+            color: "#cc495e", // You can also use a gradient here
+            opacity: 0.6, // Adjust opacity as needed
+          },
         },
       ],
       animation: false,
@@ -247,7 +251,19 @@ socket.on("stockPrices", (_stocks) => {
     }
 
     idToCanvas[id].setOption({
-      series: [{ data: stock.d }],
+      series: [
+        {
+          data: stock.d,
+          lineStyle:
+            stock.d[0][1] >= stock.price
+              ? { color: "#cc495e", width: 2 }
+              : { color: "#a6da95", width: 2 },
+          areaStyle: {
+            color: stock.d[0][1] >= stock.price ? "#cc495e" : "#a6da95", // You can also use a gradient here
+            opacity: 0.6, // Adjust opacity as needed
+          },
+        },
+      ],
       animation: false,
     });
 
@@ -276,8 +292,8 @@ function sortStocks(stocks) {
 
   items.sort(
     (a, b) =>
-      (stocks.find((s)=>s.i == b.getAttribute("id"))?.price || 0) -
-      (stocks.find((s)=>s.i == a.getAttribute("id"))?.price || 0)
+      (stocks.find((s) => s.i == b.getAttribute("id"))?.price || 0) -
+      (stocks.find((s) => s.i == a.getAttribute("id"))?.price || 0)
   );
 
   // Append sorted elements back into the container in the new order
@@ -289,7 +305,7 @@ function updateBuySell(id) {
   const element = idToElem[id];
   if (!element) return;
 
-  const stock = stocks.find((s)=>s.i == id);
+  const stock = stocks.find((s) => s.i == id);
   const buyButton = element.querySelector(".buyButton");
   const sellButton = element.querySelector(".sellButton");
   const boughtIndicator = element.querySelector(".boughtIndicator");
@@ -317,9 +333,7 @@ function formatTime(seconds) {
 
 function explosionClick(event, buy) {
   const boom = document.createElement("img");
-  boom.src = buy
-    ? `/img/confetti.png`
-    : `/img/explosion.png`;
+  boom.src = buy ? `/img/confetti.png` : `/img/explosion.png`;
   boom.classList.add("boom");
   boom.style.left =
     event.pageX - (buy ? 200 : 100) + (Math.random() * 60 - 30) + "px";
