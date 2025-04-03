@@ -56,7 +56,7 @@ module.exports = () => {
 
   // Write the whole array
 
-  if(__dirname.includes("/util/")){
+  if(__dirname.includes("/util")){
     require(`fs`).writeFileSync(
       `./kasaneTetoSongs.json`,
       JSON.stringify(allVideos)
