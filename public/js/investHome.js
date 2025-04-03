@@ -254,7 +254,7 @@ socket.on("stockPrices", (_stocks) => {
     idToElem[id].querySelector(`.price`).innerText =
       "$" + formatMoney(Number(stock.price));
 
-    if (stock.d[0] >= stock.price) {
+    if (stock.d[0][1] >= stock.price) {
       idToElem[id].querySelector(`.price`).classList.add(`down`);
     } else {
       idToElem[id].querySelector(`.price`).classList.remove(`down`);
