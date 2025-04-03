@@ -195,7 +195,6 @@ Object.values(db.rawData).forEach((stock) => {
 
 module.exports = {
   setSongs,
-  loop,
   getStockPrices,
   getUserFromAuth,
   sellStock,
