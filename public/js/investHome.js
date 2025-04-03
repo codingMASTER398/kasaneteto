@@ -318,8 +318,8 @@ function formatTime(seconds) {
 function explosionClick(event, buy) {
   const boom = document.createElement("img");
   boom.src = buy
-    ? `/img/confetti.gif?${new Date().getTime()}`
-    : `/img/explosion.gif?${new Date().getTime()}`;
+    ? `/img/confetti.png`
+    : `/img/explosion.png`;
   boom.classList.add("boom");
   boom.style.left =
     event.pageX - (buy ? 200 : 100) + (Math.random() * 60 - 30) + "px";

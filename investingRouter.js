@@ -195,7 +195,7 @@ router.use(async (req, res, next) => {
 router.get("/", (req, res) => {
   if (!req.user) {
     res.render("investLogin.ejs", {
-      URL: process.env.URL + "/invest/wawaworld",
+      URL: process.env.URL + "invest/wawaworld",
     });
     return;
   }
@@ -206,7 +206,7 @@ router.get("/", (req, res) => {
 router.get("/leaderboard", (req, res) => {
   if (!req.user) {
     res.render("investLogin.ejs", {
-      URL: process.env.URL + "/invest/wawaworld",
+      URL: process.env.URL + "invest/wawaworld",
     });
     return;
   }
