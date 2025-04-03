@@ -16,6 +16,7 @@
   padding: 12px;
   background-size: cover !important;
   background-repeat: no-repeat;
+  position: relative;
 }
 
 .stock.bounceGreen {
@@ -47,12 +48,15 @@
 }
 
 .stock .chart {
+  margin-bottom: 6px;
 }
 
 .priceWrapper {
   display: flex;
   width: 100%;
   align-items: center;
+  justify-content: space-between;
+  gap: 6px;
 }
 
 .price {
@@ -62,4 +66,181 @@
 }
 .price.down {
   color: #ff5975;
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.buyButton,
+.sellButton {
+  padding: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: small;
+  border: none;
+  box-shadow: none;
+  font-family: "ZenKakuGothicNew";
+  font-weight: 900;
+}
+
+.buyButton:disabled,
+.sellButton:disabled {
+  filter: brightness(50%);
+}
+
+.buyButton {
+  background-color: #a6da95;
+  box-shadow: 0 2px 0 #729964;
+}
+.sellButton {
+  background-color: #ff5975;
+  box-shadow: 0 2px 0 #c74258;
+}
+
+.buyButton:active {
+  box-shadow: 0;
+  transform: translateY(4px);
+}
+.sellButton:active {
+  box-shadow: 0;
+  transform: translateY(4px);
+}
+
+.boom {
+  position: absolute;
+  z-index: 9999;
+  pointer-events: none;
+  scale: 0.3;
+}
+
+.boughtIndicator {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  rotate: 5deg;
+  transform: translate(50%, -50%);
+  background-color: white;
+  color: black;
+  padding: 4px;
+  width: 60px;
+  font-weight: 900;
+  font-size: small;
+  z-index: 999;
+  text-align: center;
+  outline: 2px solid #a6da95;
+  outline-offset: -4px;
+  border-radius: 2px;
+  box-shadow: -6px 6px 0 rgba(114, 153, 100, 0.5);
+}
+
+.boughtIndicator.bounce{
+  animation: BIBounce 0.1s ease-out;
+}
+@keyframes BIBounce {
+  0%{
+    scale: 1.5;
+  }
+}
+
+#money,
+#nextUpdate {
+  position: sticky;
+  top: 64px;
+  height: 1px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  box-sizing: border-box;
+  padding-right: 100px;
+  z-index: 9999;
+
+  font-family: "NabalaRegular";
+  font-weight: 900;
+  font-size: 4rem;
+  filter: drop-shadow(0 0 4px black);
+
+  margin: 0;
+}
+#money p,
+#nextUpdate p {
+  font-family: "ZenKakuGothicNew";
+  font-weight: 900;
+  font-style: italic;
+  color: gold;
+  font-size: medium;
+  margin: 0;
+  filter: drop-shadow(0 0 4px black);
+}
+
+#nextUpdate {
+  align-items: flex-start;
+  padding-right: 0px;
+  padding-left: 100px;
+  filter: grayscale(1) drop-shadow(0 0 4px black);
+}
+
+#money.bounce,
+#nextUpdate.bounce {
+  animation: bounceMoney 0.1s ease-out;
+}
+
+@keyframes bounceMoney {
+  0% {
+    rotate: 1deg;
+  }
+}
+
+.leaderboard {
+  display: flex;
+  width: 100%;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaderboard .user:first-child {
+  box-shadow: 0 0 48px 12px #c74258;
+  outline: 2px solid #ff5975;
+}
+
+.leaderboard .user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #eee;
+  border-radius: 3px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
+
+.leaderboard .user p {
+  margin: 0;
+  padding: 6px;
+}
+
+.leaderboard .user .name {
+  width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaderboard .user .worth {
+  background: #519e37;
+  color: white;
+  width: 100px;
+}
+
+.leaderboard .user .place {
+  background: #ff5975;
+  color: white;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  width: 60px;
 }

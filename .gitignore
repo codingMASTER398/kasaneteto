@@ -4,6 +4,7 @@ dbb
 public/img/songThumbnails
 util/kasaneTetoSongs.json
 util/investing/secretFormula.js
+util/investing/secretFormula.js.old
 .env
 util/investing/test.json
 util/investing/test.js

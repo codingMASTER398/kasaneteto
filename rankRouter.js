@@ -3,7 +3,7 @@ const router = express.Router()
 const rateLimit = require(`express-rate-limit`)
 const fs = require(`fs`)
 
-let db;
+let db, songsToChooseFrom;
 
 try{
   db = require(`./db/votes.json`)
@@ -22,7 +22,18 @@ setInterval(writeDb, 10_000)
 let songs, tokens = {};
 
 function updateSongs(s) {
-  songs = s
+  songs = s;
+
+  songsToChooseFrom = songs.map((song)=>{
+    return {
+      id: song.id,
+      num: (db[song.id]?.pos || 0) + (db[song.id]?.neg || 0)
+    }
+  }).sort((a, b)=>{
+    return a.num - b.num
+  }).slice(0, 100).map((song)=>{
+    return songs.find((s)=>s.id == song.id)
+  })
 }
 
 // Route
@@ -40,8 +51,8 @@ const limiter = rateLimit({
 router.use(require(`request-ip`).mw())
 
 router.post('/new', limiter, (req, res) => {
-  const A = songs[Math.floor(Math.random() * songs.length)]
-  const BSort = songs.filter((s)=>s != A)
+  const A = songsToChooseFrom[Math.floor(Math.random() * songsToChooseFrom.length)]
+  const BSort = songsToChooseFrom.filter((s)=>s != A)
   const B = BSort[Math.floor(Math.random() * BSort.length)]
 
   const token = String(Math.random())

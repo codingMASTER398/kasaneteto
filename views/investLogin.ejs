@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../components/head') -%>
+
+    <link rel="stylesheet" href="/css/investo.css" />
+    <title>Kasane Investo</title>
+
+    <meta name="description" content="kasane investo" />
+    <meta
+      property="og:description"
+      content="INVEST in your favourite KASANE TETO songs using REAL POPULARITY DATA! Start with $500< and use INSIDER TRADING and MONEY LAUNDERING to get to the top of the LEADERBOARD!!!"
+    />
+    <meta property="og:title" content="kasane investo" />
+  </head>
+  <body class="investing">
+    <%- include('../components/titlebar') -%>
+
+    <script>
+      document.querySelector(`navigation .invest`).classList.add("selected");
+    </script>
+
+    <div class="mainContentPad">
+      <div class="center">
+        <img src="/img/kasaneInvesto.png" alt="Kasane Investo" />
+
+        <p>
+          Start GAMBLING and save your progress with one of the convenient
+          options below!
+        </p>
+
+        <div class="centerFlex">
+          <button
+            class="loginBtn"
+            onclick="window.location =('https://auth.coding398.dev/go/discord?callback=<%=URL%>')"
+          >
+            Discord
+          </button>
+          <button
+            class="loginBtn"
+            onclick="window.location =('https://auth.coding398.dev/go/steam?callback=<%=URL%>')"
+          >
+            Steam
+          </button>
+        </div>
+        <br />
+        <i>or, alternatively..</i>
+        <br />
+        <br />
+        <button
+          onclick="window.location = ('https://auth.coding398.dev/go/google?callback=<%=URL%>')"
+        >
+          Google
+        </button>
+        <button
+          onclick="window.location =('https://auth.coding398.dev/go/github?callback=<%=URL%>')"
+        >
+          GitHub
+        </button>
+        <button
+          onclick="window.location =('https://auth.coding398.dev/go/microsoft?callback=<%=URL%>')"
+        >
+          Microsoft
+        </button>
+        <button
+          onclick="window.location =('https://auth.coding398.dev/go/facebook?callback=<%=URL%>')"
+        >
+          Facebook
+        </button>
+        <p>
+          Your username in the service you sign up with will be shown on the
+          leaderboard
+        </p>
+      </div>
+    </div>
+
+    <%- include('../components/bottom') -%>
+  </body>
+</html>

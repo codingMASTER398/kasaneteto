@@ -8,7 +8,13 @@ body {
 
 body.tetoDay {
   background: url("/img/bg0401.png"), url("/img/bg.png") repeat-x,
-    url("/img/bg.png") repeat-y;
+    url("/img/bg.png") repeat-y !important;
+  background-color: rgba(238, 230, 230, 1);
+}
+
+body.investing {
+  background: url("/img/moneyBG.webp"), url("/img/moneyBG.webp") repeat-x,
+    url("/img/moneyBG.webp") repeat-y;
   background-color: rgba(238, 230, 230, 1);
 }
 

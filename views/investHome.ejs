@@ -5,34 +5,39 @@
 
     <link rel="stylesheet" href="/css/investo.css" />
 
-    <title>Kasane Teto songs</title>
-    <meta
-      name="description"
-      content="kasanete.to - Comprehensive song list of Kasane Teto music"
-    />
-    <meta
-      name="keywords"
-      content="Kasane Teto, 歌音テト, Uta no Teto, fanart, music, archives, virtual singer, fan-made, community, website"
-    />
-    <meta
-      name="author"
-      content="coding398 & kasanete.to Community (Fan-made)"
-    />
-    <meta property="og:title" content="kasanete.to - Song list" />
+    <title>Kasane Investo</title>
+    <meta name="description" content="kasane investo" />
     <meta
       property="og:description"
-      content="Comprehensive song list of Kasane Teto music"
+      content="INVEST in your favourite KASANE TETO songs using REAL POPULARITY DATA! Start with $500< and use INSIDER TRADING and MONEY LAUNDERING to get to the top of the LEADERBOARD!!!"
     />
-    <meta property="og:image" content="https://kasanete.to/img/fukkireta.gif" />
+    <meta property="og:title" content="kasane investo" />
   </head>
-  <body>
+  <body class="investing">
     <%- include('../components/titlebar') -%>
 
+    <script>
+      document.querySelector(`navigation .invest`).classList.add("selected");
+    </script>
+
+    <div id="nextUpdate">
+      
+    </div>
+    <div id="money">
+    </div>
+
     <div class="mainContentPad">
-      <h1>kasane investo</h1>
+      <div class="center">
+        <img src="/img/kasaneInvesto.png" alt="Kasane Investo" style="max-width: 100%;">
+        <p><b>BETA!!! BETA!!! LIKE I SHOULDN'T HAVE PUSHED TO PROD YET BUT I DID. HAHAHAHAHA.</b> we'll see how this goes.</p>
+        <p>INVEST in your favourite KASANE TETO songs using <b><i>REAL</i></b> POPULARITY DATA!!</p>
+        <p>Start with <b>$500</b> and use <i>INSIDER TRADING</i> and <i>MONEY LAUNDERING</i> to get to the top of the <a target="_blank" style="font-weight: 900;" href="/invest/leaderboard">LEADERBOARD!!!</a></p>
+        <p>BORED whilst waiting for stock updates?? Open a new tab of <a target="_blank" href="/rank" style="font-weight: 900;">RANKING Kasane Teto songs!</a></p>
+        <br>
+      </div>
 
       <div class="investmentsHolder">
-
+        <h1>LOADING...</h1>
       </div>
     </div>
 

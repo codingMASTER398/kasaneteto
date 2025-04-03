@@ -134,7 +134,14 @@ a.visited {
   text-align: center;
 }
 
-input[type="text"], select, button {
+.centerFlex {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="text"], select, button:not(.buyButton, .sellButton) {
   padding: 12px;
   padding-left: 24px;
   padding-right: 24px;
@@ -147,14 +154,14 @@ input[type="text"], select, button {
   font-weight: 700;
 }
 
-button{
+button:not(.buyButton, .sellButton){
   margin-left: 12px;
   margin-right: 12px;
   margin-bottom: 12px;
   box-shadow: 0 0 6px rgba(0,0,0,0.3) inset, 0 6px 0 #ca4c5e;
 }
 
-button:active{
+button:not(.buyButton, .sellButton):active{
   box-shadow: 0 0 16px #e85e79;
   transform: translateY(3px);
 }
@@ -164,4 +171,9 @@ iframe{
   width: 40%;
   border: none;
   border-radius: 3px;
+}
+
+.loginBtn{
+  min-width: 300px;
+  font-size: medium;
 }

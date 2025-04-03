@@ -85,9 +85,14 @@
     max-height: 1000px;
     height: auto;
   }
-  navigation img{
+  navigation img.logo{
     width: 100%;
     height: 128px;
+  }
+
+  navigation a, navigation a img{
+    height: 48px;
+    font-size: 2.5rem;
   }
 
   navigation::before{
@@ -99,6 +104,22 @@
   .footerFill {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  /* investo */
+  #money, #nextUpdate {
+    height: 100px !important;
+    margin-top: 48px !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    align-items: center !important;
+  }
+
+  #money{
+    top: 148px !important;
+  }
+  #nextUpdate{
+    top: 0px !important;
   }
 }
 

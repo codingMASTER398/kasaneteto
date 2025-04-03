@@ -81,16 +81,13 @@ app.get("/songs", (req, res) => {
   });
 });
 
-app.get("/invest", (req, res) => {
-  res.render("investHome.ejs", {
-  });
-});
 
 app.get("/rank", (req, res) => {
   res.render("rank.ejs");
 });
 
 app.use("/rankRouter", rankRouter.router);
+app.use("/invest", investingRouter.router)
 
 setInterval(refreshTetoSongs, 10 * 60_000); // 10 minutes
 setInterval(()=>{

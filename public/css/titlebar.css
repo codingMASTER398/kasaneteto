@@ -33,12 +33,19 @@ navigation::before{
   outline-offset: -3px;
 }
 
-navigation img{
+navigation img.logo{
   height: 100%;
 }
 
-body.tetoDay navigation img{
+body.tetoDay navigation img.logo{
   content: url("/img/logo0401.webp");
+}
+
+navigation a:has(img) {
+  height: 40px;
+}
+navigation a img{
+  height: 100%;
 }
 
 navigation a {
@@ -48,7 +55,7 @@ navigation a {
 }
 navigation a.selected{
   color: #e9607a;
-  filter: drop-shadow(0 0 3px black);
+  filter: drop-shadow(0 0 3px black) brightness(130%);
 }
 navigation a:not(:visited) {
   color: white;
