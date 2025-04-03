@@ -134,7 +134,7 @@ socket.on("baseStocks", (s) => {
         axisPointer: { type: "line" },
         formatter: (params) => {
           var time = new Date(params[0].data[0]); // Convert timestamp
-          var value = params[0].data[1].toFixed(4);
+          var value = Number(params[0].data[1]).toFixed(4);
           return `${formatDate(time)}<br>$${value}`; // Format tooltip
         },
       },
