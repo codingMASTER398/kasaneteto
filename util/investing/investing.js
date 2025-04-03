@@ -108,7 +108,7 @@ async function pushUpdate() {
       const IPOPrice = secretFormula.canIPO(id);
       if (IPOPrice === -1) return;
 
-      let priceWithDate = [Date.now(), IPOPrice];
+      let priceWithDate = [Date.now(), Number(IPOPrice).toFixed(4)];
 
       db.rawData[id] = {
         day: [priceWithDate],
@@ -129,7 +129,7 @@ async function pushUpdate() {
     db.rawData[id].currentPrice = newPrice;
     latestStockPrices[id] = newPrice;
 
-    let priceWithDate = [Date.now(), newPrice];
+    let priceWithDate = [Date.now(), Number(newPrice).toFixed(4)];
     db.rawData[id].day.push(priceWithDate);
 
     if (db.rawData[id].day.length > 144) {
