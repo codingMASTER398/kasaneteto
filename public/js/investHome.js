@@ -147,7 +147,7 @@ socket.on("baseStocks", (s) => {
           symbol: "none",
           areaStyle: {
             color: "#cc495e", // You can also use a gradient here
-            opacity: 0.6, // Adjust opacity as needed
+            opacity: 0.9, // Adjust opacity as needed
           },
         },
       ],
@@ -260,7 +260,7 @@ socket.on("stockPrices", (_stocks) => {
               : { color: "#a6da95", width: 2 },
           areaStyle: {
             color: stock.d[0][1] >= stock.price ? "#cc495e" : "#a6da95", // You can also use a gradient here
-            opacity: 0.6, // Adjust opacity as needed
+            opacity: 0.9, // Adjust opacity as needed
           },
         },
       ],
