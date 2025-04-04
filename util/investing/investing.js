@@ -59,35 +59,39 @@ function getUserFromAuth(auth) {
   return db.users[auth.id];
 }
 
-function buyStock(userID, stockID) {
-  if (!db.users[userID] || !latestStockPrices[stockID]) return;
+function buyStock(userID, data) {
+  if (!db.users[userID] || !latestStockPrices[data.id]) return;
+  if(data.mult < 1) return;
+  data.mult = Math.ceil(data.mult) || 1
 
-  if (db.users[userID].cash - latestStockPrices[stockID] < 0) {
+  if (db.users[userID].cash - (latestStockPrices[data.id] * data.mult) < 0) {
     console.log("Insufficient cash");
     return;
   }
 
-  if (latestStockPrices[stockID] <= 0.1) {
+  if (latestStockPrices[data.id] <= 0.1) {
     console.log("Buying for this stock is disabled");
     return;
   }
 
-  db.users[userID].cash -= latestStockPrices[stockID];
-  db.users[userID].stocks[stockID] ??= 0;
-  db.users[userID].stocks[stockID]++;
+  db.users[userID].cash -= latestStockPrices[data.id] * data.mult;
+  db.users[userID].stocks[data.id] ??= 0;
+  db.users[userID].stocks[data.id] += data.mult;
   return;
 }
 
-function sellStock(userID, stockID) {
-  if (!db.users[userID] || !latestStockPrices[stockID]) return;
+function sellStock(userID, data) {
+  if (!db.users[userID] || !latestStockPrices[data.id]) return;
+  if(data.mult < 1) return;
+  data.mult = Math.ceil(data.mult) || 1
 
-  if (db.users[userID].stocks[stockID] <= 0) {
+  if (db.users[userID].stocks[data.id] / data.mult <= 0) {
     console.log("Insufficient stock");
     return;
   }
 
-  db.users[userID].cash += latestStockPrices[stockID];
-  db.users[userID].stocks[stockID]--;
+  db.users[userID].cash += latestStockPrices[data.id] * data.mult;
+  db.users[userID].stocks[data.id] -= data.mult;
   return;
 }
 

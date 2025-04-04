@@ -9,6 +9,24 @@ let idToElem = {},
   stocks = {},
   ownedStocks = {};
 
+const filters = {
+  owned: document.querySelector(`.filters .owned`),
+  onlyUp: document.querySelector(`.filters .onlyUp`),
+  buyMult: document.querySelector(`.filters .buyMult`),
+  sellMult: document.querySelector(`.filters .sellMult`),
+};
+
+Object.values(filters).forEach((v) => {
+  v.addEventListener("change", () => {
+    if (stocks) {
+      sortStocks(stocks);
+      stocks?.forEach?.((s) => {
+        updateBuySell(s.i);
+      });
+    }
+  });
+});
+
 function formatDate(date) {
   const now = new Date();
   const inputDate = new Date(date);
@@ -180,11 +198,21 @@ socket.on("baseStocks", (s) => {
     sellButton.classList.add("sellButton");
 
     buyButton.addEventListener("click", (e) => {
-      socket.emit("buyStock", inv.id);
+      let buyMult = Math.ceil(filters.buyMult.value || 1);
+
+      socket.emit("buyStock", {
+        id: inv.id,
+        mult: buyMult
+      });
       explosionClick(e, true);
     });
     sellButton.addEventListener("click", (e) => {
-      socket.emit("sellStock", inv.id);
+      let sellMult = Math.ceil(filters.sellMult.value || 1);
+
+      socket.emit("sellStock", {
+        id: inv.id,
+        mult: sellMult
+      });
       explosionClick(e);
     });
 
@@ -243,13 +271,6 @@ socket.on("stockPrices", (_stocks) => {
     }  
     */
 
-    if (stock.price != 0) {
-      idToElem[id].style.display = "block";
-    } else {
-      idToElem[id].style.display = "none";
-      return;
-    }
-
     idToCanvas[id].setOption({
       series: [
         {
@@ -297,7 +318,31 @@ function sortStocks(stocks) {
   );
 
   // Append sorted elements back into the container in the new order
-  items.forEach((item) => investmentsHolder.appendChild(item));
+  items.forEach((item) => {
+    const id = item.getAttribute("id");
+    const correspondingStock = stocks.find((s) => s.i == id);
+
+    let hideOverride = false;
+
+    if (!correspondingStock || correspondingStock.price == 0) {
+      hideOverride = true;
+    } else if (filters.owned.checked && !ownedStocks[id]) {
+      hideOverride = true;
+    } else if (
+      filters.onlyUp.checked &&
+      correspondingStock.price < correspondingStock.d[0][1]
+    ) {
+      hideOverride = true;
+    }
+
+    if (hideOverride) {
+      item.style.display = "none";
+    } else {
+      item.style.display = "block";
+    }
+
+    investmentsHolder.appendChild(item);
+  });
 }
 
 function updateBuySell(id) {
@@ -310,9 +355,15 @@ function updateBuySell(id) {
   const sellButton = element.querySelector(".sellButton");
   const boughtIndicator = element.querySelector(".boughtIndicator");
 
+  let buyMult = Math.ceil(filters.buyMult.value || 1),
+    sellMult = Math.ceil(filters.sellMult.value || 1);
+
+  buyButton.innerText = `BUY${buyMult <= 1 ? "" : " " + buyMult + "x"}`;
+  sellButton.innerText = `SELL${sellMult <= 1 ? "" : " " + sellMult + "x"}`;
+
   buyButton.toggleAttribute("hidden", stock.price <= 0.1);
-  buyButton.toggleAttribute("disabled", cashMoney <= stock.price);
-  sellButton.toggleAttribute("disabled", !ownedStocks[id]);
+  buyButton.toggleAttribute("disabled", cashMoney <= (stock.price * buyMult));
+  sellButton.toggleAttribute("disabled", (ownedStocks[id] || 0) < sellMult);
   boughtIndicator.toggleAttribute("hidden", !ownedStocks[id]);
 
   if (ownedStocks[id]) {

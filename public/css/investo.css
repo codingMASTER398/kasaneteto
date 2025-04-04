@@ -19,6 +19,10 @@
   position: relative;
 }
 
+.stock[hiddenoverride="true"] {
+  appearance: none;
+}
+
 .stock.bounceGreen {
   animation: stockBounceG 0.3s forwards;
 }
@@ -65,6 +69,7 @@
   font-weight: 700;
   color: #a6da95;
   filter: drop-shadow(0 0 3px black);
+  font-size: medium;
 }
 .price.down {
   color: #ff5975;
@@ -245,4 +250,8 @@
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   width: 60px;
+}
+
+input[type="number"] {
+  width: 50px;
 }
