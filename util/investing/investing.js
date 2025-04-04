@@ -60,6 +60,12 @@ function getUserFromAuth(auth) {
 }
 
 function buyStock(userID, data) {
+  if(typeof data == "string") {
+    data = {
+      mult: 1,
+      id: data
+    }
+  }
   if (!db.users[userID] || !latestStockPrices[data.id]) return;
   if(data.mult < 1) return;
   data.mult = Math.ceil(data.mult) || 1
@@ -81,6 +87,12 @@ function buyStock(userID, data) {
 }
 
 function sellStock(userID, data) {
+  if(typeof data == "string") {
+    data = {
+      mult: 1,
+      id: data
+    }
+  }
   if (!db.users[userID] || !latestStockPrices[data.id]) return;
   if(data.mult < 1) return;
   data.mult = Math.ceil(data.mult) || 1
