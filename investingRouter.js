@@ -32,7 +32,7 @@ let songs = [],
       investingSF.pushUpdate();
       nextUpdate = 60 * 10;
 
-      let prices = investingSF.getStockPrices()
+      let prices = investingSF.getStockPrices();
 
       Object.values(clients).forEach((socket) => {
         socket.emit("stockPrices", prices);
@@ -84,7 +84,7 @@ function ioConnection(socket) {
   function updateStats() {
     auth = investingSF.getUserFromAuth(authPayload);
 
-    socket.authPayload = authPayload
+    socket.authPayload = authPayload;
 
     socket.emit("stats", {
       cash: auth.cash,
@@ -157,6 +157,11 @@ function ioConnection(socket) {
     updateStats();
   });
 
+  socket.on("newUsername", (name) => {
+    if (!auth) return;
+    investingSF.changeUsername(authPayload.id, name);
+  });
+
   socket.on("disconnect", () => {
     console.log("Socket disconnect");
   });
@@ -200,7 +205,9 @@ router.get("/", (req, res) => {
     return;
   }
 
-  res.render("investHome.ejs", {});
+  res.render("investHome.ejs", {
+    username: req.user.name,
+  });
 });
 
 router.get("/leaderboard", (req, res) => {

@@ -59,6 +59,12 @@ function getUserFromAuth(auth) {
   return db.users[auth.id];
 }
 
+function changeUsername(userID, name) {
+  if(name.length < 3 || name.length > 50) return;
+  if (!db.users[userID]) return;
+  db.users[userID].name = name
+}
+
 function buyStock(userID, data) {
   if(typeof data == "string") {
     data = {
@@ -227,4 +233,5 @@ module.exports = {
       })
       .sort((a, b) => b.worth - a.worth);
   },
+  changeUsername
 };

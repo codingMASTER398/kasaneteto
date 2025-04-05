@@ -141,7 +141,7 @@ a.visited {
   align-items: center;
 }
 
-input[type="text"], select, button:not(.buyButton, .sellButton) {
+input[type="text"], select:not(#graphRange), button:not(.buyButton, .sellButton) {
   padding: 12px;
   padding-left: 24px;
   padding-right: 24px;

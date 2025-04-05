@@ -33,10 +33,14 @@
         <p>Start with <b>$500</b> and use <i>INSIDER TRADING</i> and <i>MONEY LAUNDERING</i> to get to the top of the <a target="_blank" style="font-weight: 900;" href="/invest/leaderboard">LEADERBOARD!!!</a></p>
         <p>BORED whilst waiting for stock updates?? Open a new tab of <a target="_blank" href="/rank" style="font-weight: 900;">RANKING Kasane Teto songs!</a></p>
         <br>
+        <p>Your username on the leaderboard is <b id="username"><%=username%></b>, <a href="#" onclick="window.changeUsername ? window.changeUsername() : alert('refresh yo cache first with ctrl shift r')">change it?</a></p>
         <div class="filters">
-          <p>filter: <input type="checkbox" class="owned"> owned <input type="checkbox" class="onlyUp"> only up, buy mult: <input type="number" step="1" min="1" class="buyMult">, sell mult: <input type="number" step="1" min="1" class="sellMult"></p>
+          <p>Filters: <input type="checkbox" class="owned"> owned <input type="checkbox" class="onlyUp"> only up, buy mult: <input type="number" step="1" min="1" class="buyMult">, sell mult: <input type="number" step="1" min="1" class="sellMult">, graph range: <select id="graphRange" value="day">
+            <option value="day">Day</option>
+            <option value="month">Month</option>
+            <option value="ever">Ever</option>
+          </select></p>
         </div>
-        <p>if anything's not working, hit ctrl+shift+r or something</p>
       </div>
 
       <div class="investmentsHolder">

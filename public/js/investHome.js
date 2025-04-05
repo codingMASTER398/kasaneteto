@@ -7,18 +7,24 @@ let idToElem = {},
   money = 0,
   cashMoney = 0,
   stocks = {},
-  ownedStocks = {};
+  ownedStocks = {},
+  lastStockPricesData;
 
 const filters = {
   owned: document.querySelector(`.filters .owned`),
   onlyUp: document.querySelector(`.filters .onlyUp`),
   buyMult: document.querySelector(`.filters .buyMult`),
   sellMult: document.querySelector(`.filters .sellMult`),
+  graphRange: document.querySelector(`.filters #graphRange`),
 };
 
 Object.values(filters).forEach((v) => {
   v.addEventListener("change", () => {
-    if (stocks) {
+    if (!stocks) return;
+
+    if (v.tagName == "SELECT") {
+      updateStockPrices(lastStockPricesData)
+    } else {
       sortStocks(stocks);
       stocks?.forEach?.((s) => {
         updateBuySell(s.i);
@@ -51,6 +57,26 @@ function formatMoney(num) {
     minimumFractionDigits: 4,
     maximumFractionDigits: 4,
   });
+}
+
+function changeUsername() {
+  if (!socket.connected) {
+    alert("Wait for everything else to load first!");
+    return;
+  }
+
+  let newUser = prompt("New username?");
+
+  if (!newUser) return;
+
+  if (newUser.length < 3 || newUser.length > 50) {
+    alert("Between 3 and 50 characters pls :3");
+    changeUsername();
+    return;
+  }
+
+  socket.emit("newUsername", newUser);
+  document.querySelector(`#username`).innerText = newUser;
 }
 
 socket.on("connect", () => {
@@ -202,7 +228,7 @@ socket.on("baseStocks", (s) => {
 
       socket.emit("buyStock", {
         id: inv.id,
-        mult: buyMult
+        mult: buyMult,
       });
       explosionClick(e, true);
     });
@@ -211,7 +237,7 @@ socket.on("baseStocks", (s) => {
 
       socket.emit("sellStock", {
         id: inv.id,
-        mult: sellMult
+        mult: sellMult,
       });
       explosionClick(e);
     });
@@ -239,8 +265,9 @@ socket.on("baseStocks", (s) => {
   });
 });
 
-socket.on("stockPrices", (_stocks) => {
+function updateStockPrices(_stocks) {
   stocks = _stocks.dayCache;
+  lastStockPricesData = _stocks;
 
   stocks.forEach(async (stock, i) => {
     id = stock.i;
@@ -274,7 +301,17 @@ socket.on("stockPrices", (_stocks) => {
     idToCanvas[id].setOption({
       series: [
         {
-          data: stock.d,
+          data: [
+            _stocks.dayCache[i].d,
+            _stocks.monthCache[i].d,
+            _stocks.everCache[i].d,
+          ][
+            {
+              day: 0,
+              month: 1,
+              ever: 2,
+            }[document.querySelector(`#graphRange`).value]
+          ],
           lineStyle:
             stock.d[0][1] >= stock.price
               ? { color: "#cc495e", width: 2 }
@@ -305,7 +342,9 @@ socket.on("stockPrices", (_stocks) => {
   sortStocks(stocks);
 
   initialStockPricesDone = true;
-});
+}
+
+socket.on("stockPrices", updateStockPrices);
 
 /* funny utils */
 function sortStocks(stocks) {
@@ -362,7 +401,7 @@ function updateBuySell(id) {
   sellButton.innerText = `SELL${sellMult <= 1 ? "" : " " + sellMult + "x"}`;
 
   buyButton.toggleAttribute("hidden", stock.price <= 0.1);
-  buyButton.toggleAttribute("disabled", cashMoney <= (stock.price * buyMult));
+  buyButton.toggleAttribute("disabled", cashMoney <= stock.price * buyMult);
   sellButton.toggleAttribute("disabled", (ownedStocks[id] || 0) < sellMult);
   boughtIndicator.toggleAttribute("hidden", !ownedStocks[id]);
 

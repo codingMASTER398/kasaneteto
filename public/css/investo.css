@@ -236,6 +236,7 @@
   width: 170px;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .leaderboard .user .worth {
@@ -254,4 +255,10 @@
 
 input[type="number"] {
   width: 50px;
+}
+
+.filters input, .filters select{
+  border: none;
+  outline: 1px solid #ff5975;
+  background-color: #eee;
 }
