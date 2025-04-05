@@ -103,7 +103,7 @@ function sellStock(userID, data) {
   if(data.mult < 1) return;
   data.mult = Math.ceil(data.mult) || 1
 
-  if (db.users[userID].stocks[data.id] / data.mult <= 0) {
+  if (((db.users[userID].stocks[data.id] || 0) - data.mult) <= -1) {
     console.log("Insufficient stock");
     return;
   }
@@ -111,6 +111,23 @@ function sellStock(userID, data) {
   db.users[userID].cash += latestStockPrices[data.id] * data.mult;
   db.users[userID].stocks[data.id] -= data.mult;
   return;
+}
+
+function resetUser(data) {
+  if(!data.userID || !data.cashSet) {
+    return;
+  }
+
+  if (!db.users[data.userID]) return;
+
+  db.users[data.userID].stocks = {}
+  db.users[data.userID].cash = data.cashSet
+
+  getUserFromAuth({ id: data.userID });
+}
+
+function getUsers(){
+  return JSON.stringify(db.users)
 }
 
 // Cost data
@@ -233,5 +250,7 @@ module.exports = {
       })
       .sort((a, b) => b.worth - a.worth);
   },
-  changeUsername
+  changeUsername,
+  resetUser,
+  getUsers
 };

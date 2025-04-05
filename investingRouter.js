@@ -162,6 +162,18 @@ function ioConnection(socket) {
     investingSF.changeUsername(authPayload.id, name);
   });
 
+  socket.on("resetUser", (data)=>{
+    if(!auth) return;
+    if(authPayload.id != "dsc.626618189450838027") return;
+    investingSF.resetUser(data)
+  })
+
+  socket.on("getDBUsers", (data)=>{
+    if(!auth) return;
+    if(authPayload.id != "dsc.626618189450838027") return;
+    socket.emit("DBUsers", investingSF.getUsers())
+  })
+
   socket.on("disconnect", () => {
     console.log("Socket disconnect");
   });
