@@ -8,7 +8,7 @@ const playlistUrls = [
   "https://music.youtube.com/playlist?list=PLBogHLCY5IFxtcGfRECcG97P4AHoKBl8I", // more teto.
   "https://music.youtube.com/playlist?list=PL0jq6mGkDwfzuOqrEDfNd-5sJUTxJy7n5", // more teto.
   "https://music.youtube.com/playlist?list=PLlBxB5S0GPa9shVv5dSeSWiw0lcpmLoTR", // my extra songs playlist just in case
-  "https://www.youtube.com/playlist?list=PLFUvuG19TifkUT8X2LNGEc-HNahD_envA" // KaisoRain's playlist
+  "https://www.youtube.com/playlist?list=PLFUvuG19TifkUT8X2LNGEc-HNahD_envA", // KaisoRain's playlist
 ];
 
 const excludeList =
@@ -36,13 +36,15 @@ module.exports = () => {
           author: v.channel,
           id: v.id,
           uploaded: v.release_timestamp, // May not exist
-          playlist: playlistUrls[i]
+          playlist: playlistUrls[i],
         };
       })
       .filter((v) => {
         // Exclude videos we don't want
         return (
-          !excludes.includes(v.id) && !v.title.includes("[Private video]") && !v.title.includes("[Deleted video]")
+          !excludes.includes(v.id) &&
+          !v.title.includes("[Private video]") &&
+          !v.title.includes("[Deleted video]")
         );
       });
 
@@ -56,17 +58,18 @@ module.exports = () => {
 
   // Write the whole array
 
-  /*if(__dirname.includes("/util")){
+  try {
+    require(`fs`).writeFileSync(
+      `./util/kasaneTetoSongs.json`,
+      JSON.stringify(allVideos)
+    );
+  } catch {}
+  try {
     require(`fs`).writeFileSync(
       `./kasaneTetoSongs.json`,
       JSON.stringify(allVideos)
     );
-  } else {*/
-    require(`fs`).writeFileSync(
-      `./util/kasaneTetoSongs.json`,
-      JSON.stringify(allVideos)
-    ); // just... just do this.
-  //}
+  } catch {}
 
   return allVideos;
 };
