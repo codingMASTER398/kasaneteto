@@ -25,6 +25,11 @@
     url(/img/casino.jpg);
 }
 
+.stock.could {
+  background: 
+    url(/img/could.png);
+}
+
 .stock.beer {
   background: linear-gradient(rgba(96, 50, 52, 0.4), rgba(96, 50, 52, 0.4)),
     url(/img/beer.jpg);
