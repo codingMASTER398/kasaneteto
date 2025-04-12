@@ -203,6 +203,28 @@ function ioConnection(socket) {
     setTimeout(() => {
       gambling = false;
 
+      if (slot.payout == 0) {
+        fetch(process.env.DISCORD_WEBHOOK, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            content: stats.name + ` just lost $${spend} whilst gambling`
+          }),
+        });
+      } else {
+        fetch(process.env.DISCORD_WEBHOOK, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            content: stats.name + ` just made $${(slot.payout * spend) - spend} whilst gambling`
+          }),
+        });
+      }
+
       investingSF.setCash(auth.id, stats.cash + slot.payout * spend);
       updateStats();
     }, 800);
@@ -233,10 +255,10 @@ router.get("/wawaworld", (req, res) => {
   res.redirect("/invest");
 });
 
-router.use(`/rollDouble`, (req,res,next)=>{
+router.use(`/rollDouble`, (req, res, next) => {
   req.rollDouble = true;
-  next()
-})
+  next();
+});
 
 router.use(async (req, res, next) => {
   if (req.cookies["TETO_AUTH_DO_NOT_SHARE"]) {
@@ -248,20 +270,23 @@ router.use(async (req, res, next) => {
           return;
         }
 
-        if(req.cookies["TETO_TEST"] == "abcdef" && process.env.URL.includes("localhost:4001")) {
-          r.payload.id = "dsc.626618189450838028"
+        if (
+          req.cookies["TETO_TEST"] == "abcdef" &&
+          process.env.URL.includes("localhost:4001")
+        ) {
+          r.payload.id = "dsc.626618189450838028";
         }
 
         req.auth = r.payload;
         req.user = investingSF.getUserFromAuth(req.auth);
 
-        if(req.user.inJail) {
-          if(req.rollDouble) {
-            res.send(investingSF.rollDouble(req.auth.id))
+        if (req.user.inJail) {
+          if (req.rollDouble) {
+            res.send(investingSF.rollDouble(req.auth.id));
             return;
           }
 
-          res.render(`inJail`)
+          res.render(`inJail`);
           return;
         }
 
@@ -303,13 +328,13 @@ router.get("/leaderboard", (req, res) => {
       });
     },
     username: req.user.name,
-    id: req.user.id
+    id: req.user.id,
   });
 });
 
-router.get("/stocksAndNames", (req, res)=>{
-  res.json(investingSF.getStocksAndNames())
-})
+router.get("/stocksAndNames", (req, res) => {
+  res.json(investingSF.getStocksAndNames());
+});
 
 router.get("/how", (req, res) => {
   res.render(`investingHow`);
@@ -333,7 +358,7 @@ router.get("/getStats", (req, res) => {
     return;
   }
 
-  res.send(investingSF.getUserFromAuth(req.user))
+  res.send(investingSF.getUserFromAuth(req.user));
 });
 
 router.get("/canProtest", (req, res) => {
@@ -424,7 +449,7 @@ router.post("/cancelManipulation/:id", (req, res) => {
   res.status(200).send(`ok`);
 });
 
-router.post(`/sendMoneyTo/:user/:amount`, (req, res)=>{
+router.post(`/sendMoneyTo/:user/:amount`, (req, res) => {
   if (!req.user) {
     res.status(403).send("Not logged in loser");
     return;
@@ -442,7 +467,7 @@ router.post(`/sendMoneyTo/:user/:amount`, (req, res)=>{
     return;
   }
 
-  if(req.user.id == req.params.user) {
+  if (req.user.id == req.params.user) {
     res.status(400).send(`LMAOOOOOOOOO`);
     return;
   }
@@ -450,16 +475,16 @@ router.post(`/sendMoneyTo/:user/:amount`, (req, res)=>{
   investingSF.sendMoney(req.user.id, req.params.user, am);
 
   res.status(200).send(`ok`);
-})
+});
 
-router.post(`/accuse/:user/:stock`, (req, res)=>{
+router.post(`/accuse/:user/:stock`, (req, res) => {
   if (!req.user) {
     res.status(403).send("Not logged in loser");
     return;
   }
 
-  res.send(investingSF.accuse(req.user.id, req.params.user, req.params.stock))
-})
+  res.send(investingSF.accuse(req.user.id, req.params.user, req.params.stock));
+});
 
 module.exports = {
   updateSongs,
