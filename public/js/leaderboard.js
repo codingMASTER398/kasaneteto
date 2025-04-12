@@ -99,6 +99,8 @@ async function investigate(user) {
     Swal.showLoading()
 
     const stats = await (await fetch(`/invest/getStats`)).json();
+    let a = await (await fetch("/invest/stocksAndNames")).json();
+    Object.keys(a).forEach((aa)=>{a[aa] = aa})
 
     if(stats.spendingMoney < 100) {
       await Swal.fire({
@@ -124,13 +126,15 @@ async function investigate(user) {
     if(!isConfirmed || !value) return;
 
     let stock;
+
     
     if(value == "manipulation") {
       const r = await Swal.fire({
         title: "What stock are they manipulating?",
+        text: "You can get the stock ID in those little three dots thing",
         input: "select",
-        inputOptions: await (await fetch("/invest/stocksAndNames")).json(),
-        inputPlaceholder: "Select a STOCK",
+        inputOptions: a,
+        inputPlaceholder: "Select a STOCK ID",
         showCancelButton: true,
       });
 
