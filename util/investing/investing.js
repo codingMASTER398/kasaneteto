@@ -132,7 +132,7 @@ function accuse(accuser, accused, accusedFor) {
     theyGotCaught = true;
   else if (
     accusedFor != "laundering" &&
-    db.users[accused].manipulating[accusedFor]
+    db.users[accused].manipulating?.[accusedFor]
   )
     theyGotCaught = true;
 
