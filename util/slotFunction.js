@@ -32,6 +32,7 @@ module.exports = () => {
     if(!result.includes(element)) continue;
     if(payout == 0) payout = 1;
     payout *= payAmount[element]
+    break;
   }
 
   return {
