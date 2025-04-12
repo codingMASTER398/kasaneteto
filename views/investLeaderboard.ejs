@@ -49,10 +49,10 @@
             <p class="worth">$<%=formatMoney(user.worth)%></p>
             <% if(user.beer) { %>
             <p class="beer">🍺 <%=user.beer%></p>
-            <% } %> <% if(user.id != id && !user.inJail) { %>
+            <% } %> <% if(user.id != id) { %>
             <p class="manipulate">
               <a onclick="payMoneyTo('<%=user.id%>')">💸</a>
-              <a onclick="investigate('<%=user.id%>')">🕵️</a>
+              <%if(!user.inJail){%><a onclick="investigate('<%=user.id%>')">🕵️</a><%}%>
             </p>
             <% } %>
             <p class="place">#<%=i + 1%></p>
