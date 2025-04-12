@@ -1,5 +1,5 @@
 const socket = io();
-const investmentsHolder = document.querySelector(`.investmentsHolder`);
+const investmentsHolder = document.querySelector(`.investmentsHolder.stocks`);
 
 let idToElem = {},
   idToCanvas = {},
@@ -8,7 +8,9 @@ let idToElem = {},
   cashMoney = 0,
   stocks = {},
   ownedStocks = {},
-  lastStockPricesData;
+  manipulatingStocks = {},
+  lastStockPricesData,
+  spendingMoney = 0;
 
 const filters = {
   owned: document.querySelector(`.filters .owned`),
@@ -20,10 +22,13 @@ const filters = {
 
 Object.values(filters).forEach((v) => {
   v.addEventListener("change", () => {
+    filters.buyMult.value = Math.max(1, Math.round(filters.buyMult.value));
+    filters.sellMult.value = Math.max(1, Math.round(filters.sellMult.value));
+
     if (!stocks) return;
 
     if (v.tagName == "SELECT") {
-      updateStockPrices(lastStockPricesData)
+      updateStockPrices(lastStockPricesData);
     } else {
       sortStocks(stocks);
       stocks?.forEach?.((s) => {
@@ -59,26 +64,6 @@ function formatMoney(num) {
   });
 }
 
-function changeUsername() {
-  if (!socket.connected) {
-    alert("Wait for everything else to load first!");
-    return;
-  }
-
-  let newUser = prompt("New username?");
-
-  if (!newUser) return;
-
-  if (newUser.length < 3 || newUser.length > 50) {
-    alert("Between 3 and 50 characters pls :3");
-    changeUsername();
-    return;
-  }
-
-  socket.emit("newUsername", newUser);
-  document.querySelector(`#username`).innerText = newUser;
-}
-
 socket.on("connect", () => {
   socket.emit(
     "auth",
@@ -97,19 +82,25 @@ socket.on("stats", (stats) => {
   document.querySelector(`#money`).offsetWidth;
   document.querySelector(`#money`).classList.add("bounce");
 
-  document.querySelector(`#money`).innerHTML = `$${formatMoney(
-    stats.cash + stats.cashStocks
-  )}<p>$${formatMoney(stats.cashStocks)} in stocks, $${formatMoney(
-    stats.cash
-  )} in cash</p>`;
-
   money = stats.cash + stats.cashStocks;
   cashMoney = stats.cash;
   ownedStocks = stats.stocks;
+  manipulatingStocks = stats.manipulating || {};
+ 
+  let maxSpendAmount = money - 500;
+  spendingMoney = Math.max(0, Math.min(maxSpendAmount, cashMoney));
+
+  document.querySelector(`#money`).innerHTML = `$${formatMoney(
+    money
+  )}<p>$${formatMoney(stats.cashStocks)} in stocks, $${formatMoney(
+    cashMoney
+  )} in cash</p><p>$${formatMoney(spendingMoney)} in spending money</p>`;
 
   stocks?.forEach?.((s) => {
     updateBuySell(s.i);
   });
+
+  window.updateInvestSlot();
 });
 
 socket.on("doubleUp", () => {
@@ -158,7 +149,7 @@ socket.on("baseStocks", (s) => {
     const chart = document.createElement(`div`);
     chart.id = "chart" + inv.id;
     chart.classList.add("chart");
-    chart.style = "width: 200px;height: 60px";
+    chart.style = "width: 250px;height: 60px"; // im working on kasane investo
 
     let myChart = echarts.init(chart, "dark");
 
@@ -223,6 +214,22 @@ socket.on("baseStocks", (s) => {
     sellButton.innerText = "SELL";
     sellButton.classList.add("sellButton");
 
+    const manipulateButton = document.createElement("button");
+    manipulateButton.innerText = "⋮";
+    manipulateButton.classList.add("manipulateButton");
+
+    tippy(manipulateButton, {
+      content: `
+      <a onclick="protestStock('${inv.id}')">Protest stock</a><br>
+      <a onclick="manipulateStock('${inv.id}')">Manipulate stock</a><br>
+      <a onclick="cancelManipulateStock('${inv.id}')">Cancel manipulation</a>`,
+      allowHTML: true,
+      interactive: true,
+      trigger: 'click',
+      placement: 'top-start',
+      theme: 'light',
+    });
+
     buyButton.addEventListener("click", (e) => {
       let buyMult = Math.ceil(filters.buyMult.value || 1);
 
@@ -248,10 +255,16 @@ socket.on("baseStocks", (s) => {
     boughtIndicator.classList.add(`boughtIndicator`);
     boughtIndicator.setAttribute("hidden", "true");
 
+    const manipulatingIndicator = document.createElement(`span`);
+    manipulatingIndicator.innerText = "0";
+    manipulatingIndicator.classList.add(`manipulatingIndicator`);
+    manipulatingIndicator.setAttribute("hidden", "true");
+
     //
 
     buttonWrapper.append(buyButton);
     buttonWrapper.append(sellButton);
+    buttonWrapper.append(manipulateButton)
 
     priceWrapper.append(priceText);
     priceWrapper.appendChild(buttonWrapper);
@@ -260,6 +273,7 @@ socket.on("baseStocks", (s) => {
     element.append(chart);
     element.append(priceWrapper);
     element.appendChild(boughtIndicator);
+    element.appendChild(manipulatingIndicator);
 
     investmentsHolder.appendChild(element);
   });
@@ -382,6 +396,9 @@ function sortStocks(stocks) {
 
     investmentsHolder.appendChild(item);
   });
+
+  // Update other stuff too
+  window.updateInvestSlot();
 }
 
 function updateBuySell(id) {
@@ -393,6 +410,7 @@ function updateBuySell(id) {
   const buyButton = element.querySelector(".buyButton");
   const sellButton = element.querySelector(".sellButton");
   const boughtIndicator = element.querySelector(".boughtIndicator");
+  const manipulatingIndicator = element.querySelector(".manipulatingIndicator");
 
   let buyMult = Math.ceil(filters.buyMult.value || 1),
     sellMult = Math.ceil(filters.sellMult.value || 1);
@@ -404,6 +422,7 @@ function updateBuySell(id) {
   buyButton.toggleAttribute("disabled", cashMoney <= stock.price * buyMult);
   sellButton.toggleAttribute("disabled", (ownedStocks[id] || 0) < sellMult);
   boughtIndicator.toggleAttribute("hidden", !ownedStocks[id]);
+  manipulatingIndicator.toggleAttribute("hidden", manipulatingStocks[id] <= 0 || !manipulatingStocks[id])
 
   if (ownedStocks[id]) {
     const newIndicatorText = ownedStocks[id];
@@ -413,6 +432,10 @@ function updateBuySell(id) {
       boughtIndicator.classList.add("bounce");
       boughtIndicator.innerText = newIndicatorText;
     }
+  }
+
+  if (manipulatingStocks[id] && manipulatingStocks[id] > 0) {
+    manipulatingIndicator.innerText = `$${manipulatingStocks[id] * 10} 😈`;
   }
 }
 function formatTime(seconds) {

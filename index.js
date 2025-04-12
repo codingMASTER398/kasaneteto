@@ -88,7 +88,7 @@ app.use("/rankRouter", rankRouter.router);
 app.use("/invest", investingRouter.router);
 
 setInterval(refreshTetoSongs, 10 * 60_000); // 10 minutes
-refreshTetoSongs();
+//refreshTetoSongs();
 setInterval(() => {
   fs.writeFileSync(`./db/visits.json`, JSON.stringify({ visits }));
   fs.writeFileSync(`./dbb/visits.json`, JSON.stringify({ visits }));

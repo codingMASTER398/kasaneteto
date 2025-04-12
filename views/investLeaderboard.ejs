@@ -22,21 +22,48 @@
 
     <div class="mainContentPad">
       <div class="center">
-        <img src="/img/kasaneInvesto.png" alt="Kasane Investo" style="max-width: 100%;">
-        <p><b>LEADERBOARD!!!</b> Left to right, top to bottom, <%=leaderboard.length%> people play!</p>
-        <p>also the gal "hhh hhhl" seems to have broken the stock market, so i fixed that and reset their account :)</p>
+        <img
+          src="/img/kasaneInvesto.png"
+          alt="Kasane Investo"
+          style="max-width: 100%"
+        />
+        <p>
+          <b>LEADERBOARD!!!</b> Left to right, top to bottom,
+          <%=leaderboard.length%> people play!
+        </p>
+        <p>
+          Your username on the leaderboard is
+          <b id="username"><%=username%></b>,
+          <a
+            href="#"
+            onclick="window.changeUsername ? window.changeUsername() : alert('refresh yo cache first with ctrl shift r')"
+            >change it?</a
+          >
+        </p>
+        <br />
 
         <div class="leaderboard">
           <% leaderboard.forEach((user, i)=>{ %>
-            <div class="user">
-              <p class="name"><%=user.name%></p>
-              <p class="worth">$<%=formatMoney(user.worth)%></p>
-              <p class="place">#<%=i + 1%></p>
-            </div>
+          <div class="user <%=user.inJail ? "jailed" : ""%>">
+            <p class="name"><%=user.name%></p>
+            <p class="worth">$<%=formatMoney(user.worth)%></p>
+            <% if(user.beer) { %>
+            <p class="beer">🍺 <%=user.beer%></p>
+            <% } %> <% if(user.id != id && !user.inJail) { %>
+            <p class="manipulate">
+              <a onclick="payMoneyTo('<%=user.id%>')">💸</a>
+              <a onclick="investigate('<%=user.id%>')">🕵️</a>
+            </p>
+            <% } %>
+            <p class="place">#<%=i + 1%></p>
+          </div>
           <% }) %>
         </div>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/leaderboard.js"></script>
 
     <%- include('../components/bottom') -%>
   </body>

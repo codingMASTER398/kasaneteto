@@ -141,7 +141,7 @@ a.visited {
   align-items: center;
 }
 
-input[type="text"], select:not(#graphRange), button:not(.buyButton, .sellButton) {
+input[type="text"], select:not(#graphRange), button:not(.buyButton, .sellButton, .manipulateButton, .swal2-styled) {
   padding: 12px;
   padding-left: 24px;
   padding-right: 24px;
@@ -154,14 +154,14 @@ input[type="text"], select:not(#graphRange), button:not(.buyButton, .sellButton)
   font-weight: 700;
 }
 
-button:not(.buyButton, .sellButton){
+button:not(.buyButton, .sellButton, .manipulateButton, .swal2-styled){
   margin-left: 12px;
   margin-right: 12px;
   margin-bottom: 12px;
   box-shadow: 0 0 6px rgba(0,0,0,0.3) inset, 0 6px 0 #ca4c5e;
 }
 
-button:not(.buyButton, .sellButton):active{
+button:not(.buyButton, .sellButton, .manipulateButton, .swal2-styled):active{
   box-shadow: 0 0 16px #e85e79;
   transform: translateY(3px);
 }

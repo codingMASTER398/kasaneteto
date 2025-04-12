@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../components/head') -%>
+
+    <link rel="stylesheet" href="/css/investo.css" />
+
+    <title>Leaderboard - Kasane Investo</title>
+    <meta name="description" content="kasane investo" />
+    <meta
+      property="og:description"
+      content="INVEST in your favourite KASANE TETO songs using REAL POPULARITY DATA! Start with $500< and use INSIDER TRADING and MONEY LAUNDERING to get to the top of the LEADERBOARD!!!"
+    />
+    <meta property="og:title" content="kasane investo" />
+  </head>
+  <body class="investing" style="filter: contrast(20) brightness(100%)">
+    <%- include('../components/titlebar') -%>
+
+    <script>
+      document.querySelector(`navigation .invest`).classList.add("selected");
+    </script>
+
+    <div class="mainContentPad">
+      <div class="center">
+        <img
+          src="/img/kasaneInvesto.png"
+          alt="Kasane Investo"
+          style="max-width: 100%"
+        />
+        <h1>YOU ARE IN JAIL!!!</h1>
+        <p>LOSER! LOSER! LOSER! YOU'RE IN JAIL! YOU WERE CAUGHT.<br>DO NOT PASS <b>GO</b>. DO NOT COLLECT <b>$200</b>.</p>
+
+        <button onclick="rollDouble()">ROLL A DOUBLE</button>
+      </div>
+    </div>
+
+    <script>
+      function rollDouble() {
+        fetch(`/invest/rollDouble`, {
+          method: "POST"
+        }).then(async(r)=>{
+          const response = await r.json()
+
+          if(response.success) {
+            alert(`lucky duck...`)
+            window.location.reload()
+            return;
+          } else if(response.notYet) {
+            alert(`YOU CAN ONLY ROLL ONCE EVERY 10 MINUTES!!!`)
+            return;
+          } else {
+            alert(`YOU ROLLED A ${response.A} AND A ${response.B}. THEY DO NOT MATCH. TRY AGAIN IN 10 MINUTES YOU LOSER!!!!`)
+          }
+        }).catch(alert)
+      }
+    </script>
+
+    <%- include('../components/bottom') -%>
+  </body>
+</html>

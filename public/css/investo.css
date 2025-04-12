@@ -8,15 +8,26 @@
 }
 
 .stock {
-  width: 200px;
+  width: 250px;
   height: 120px;
   background-color: rgba(126, 70, 102, 0.3);
   border-radius: 6px;
   color: white;
   padding: 12px;
   background-size: cover !important;
+  background-position: center !important;
   background-repeat: no-repeat;
   position: relative;
+}
+
+.stock.gambling {
+  background: linear-gradient(rgba(96, 50, 52, 0.4), rgba(96, 50, 52, 0.4)),
+    url(/img/casino.jpg);
+}
+
+.stock.beer {
+  background: linear-gradient(rgba(96, 50, 52, 0.4), rgba(96, 50, 52, 0.4)),
+    url(/img/beer.jpg);
 }
 
 .stock[hiddenoverride="true"] {
@@ -83,7 +94,8 @@
 }
 
 .buyButton,
-.sellButton {
+.sellButton,
+.manipulateButton {
   padding: 4px;
   padding-left: 8px;
   padding-right: 8px;
@@ -95,7 +107,8 @@
 }
 
 .buyButton:disabled,
-.sellButton:disabled {
+.sellButton:disabled,
+.manipulateButton:disabled {
   filter: brightness(50%);
 }
 
@@ -107,12 +120,14 @@
   background-color: #ff5975;
   box-shadow: 0 2px 0 #c74258;
 }
-
-.buyButton:active {
-  box-shadow: 0;
-  transform: translateY(4px);
+.manipulateButton {
+  background-color: white;
+  box-shadow: 0 2px 0 #d1d1d1;
 }
-.sellButton:active {
+
+.buyButton:active,
+.sellButton:active,
+.manipulateButton:active {
   box-shadow: 0;
   transform: translateY(4px);
 }
@@ -124,7 +139,7 @@
   scale: 0.3;
 }
 
-.boughtIndicator {
+.boughtIndicator, .manipulatingIndicator {
   position: absolute;
   top: 0;
   right: 12px;
@@ -144,11 +159,20 @@
   box-shadow: -6px 6px 0 rgba(114, 153, 100, 0.5);
 }
 
-.boughtIndicator.bounce{
+.manipulatingIndicator {
+  right: initial;
+  left: 12px;
+  transform: translate(-50%, -50%);
+  rotate: -5deg;
+  outline: 2px solid #c74258;
+  box-shadow: 6px 6px 0 red;
+}
+
+.boughtIndicator.bounce {
   animation: BIBounce 0.1s ease-out;
 }
 @keyframes BIBounce {
-  0%{
+  0% {
     scale: 1.5;
   }
 }
@@ -212,6 +236,23 @@
   justify-content: center;
 }
 
+.leaderboard .user.jailed {
+  filter: brightness(50%);
+}
+.leaderboard .user.jailed::after {
+  content: "IN JAIL!!";
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: black;
+  color: white;
+  rotate: 3deg;
+  top: 2px;
+  padding-left: 24px;
+  padding-right: 24px;
+  font-size: x-large;
+}
+
 .leaderboard .user:first-child {
   box-shadow: 0 0 48px 12px #c74258;
   outline: 2px solid #ff5975;
@@ -222,9 +263,11 @@
   align-items: center;
   justify-content: center;
 
+  font-size: small;
+
   background-color: #eee;
   border-radius: 3px;
-  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
 
 .leaderboard .user p {
@@ -239,10 +282,24 @@
   white-space: nowrap;
 }
 
+.leaderboard .user .manipulate{
+  background: red;
+  cursor: pointer;
+
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
 .leaderboard .user .worth {
   background: #519e37;
   color: white;
-  width: 100px;
+  width: 120px;
+}
+.leaderboard .user .beer {
+  background: goldenrod;
+  color: white;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .leaderboard .user .place {
@@ -250,15 +307,55 @@
   color: white;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
-  width: 60px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
-input[type="number"] {
+.filters input[type="number"] {
   width: 50px;
 }
 
-.filters input, .filters select{
+.filters input,
+.filters select {
   border: none;
   outline: 1px solid #ff5975;
   background-color: #eee;
+}
+
+/* slots */
+.stock .slots {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 5px;
+}
+.stock .slots .slot {
+  background-color: #eee;
+  width: 33%;
+  height: 100%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+}
+
+.slot.bounce {
+  animation: bounce 0.1s;
+}
+@keyframes bounce {
+  0% {
+    transform: scale(0.9);
+  }
+}
+
+div[data-tippy-root] {
+  filter: invert(1) contrast(2);
+}
+div[data-tippy-root] a{
+  color: white;
+  cursor: pointer;
 }
