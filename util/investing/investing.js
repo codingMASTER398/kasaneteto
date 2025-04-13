@@ -146,6 +146,8 @@ function accuse(accuser, accused, accusedFor) {
   db.users[accused].lastCaught = Date.now(); // Also invalidates pending money launderings
   db.users[accused].inJail = true;
 
+  db.users[accuser].cash += 200;
+
   getUserFromAuth({ id: accused }); // update it on the leaderboard
 
   return {
@@ -316,7 +318,7 @@ async function pushUpdate() {
         user.manipulating[id]--;
 
         if (newPrice > db.rawData[id].currentPrice)
-          newPrice += (newPrice - db.rawData[id].currentPrice) * 0.5;
+          newPrice += (newPrice - db.rawData[id].currentPrice);
         else
           newPrice =
             db.rawData[id].currentPrice +

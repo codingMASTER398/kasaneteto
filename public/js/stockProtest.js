@@ -31,7 +31,7 @@ function protestStock(id) {
 function manipulateStock(id) {
   Swal.fire({
     title: "Ok so you're committing a crime",
-    text: "You little crime doer. Ok, so, market manipulation is an investment that makes your stocks go up more, costing $10 every refresh (10 minutes). It increases (added) profits by 50% each time, and makes the stock ALWAYS go up. If someone catches you, you'll go to jail. How much do you want to invest in it?",
+    text: "You little crime doer. Ok, so, market manipulation is an investment that makes your stocks go up more, costing $10 every refresh (10 minutes). It increases (added) profits by 100% each time, and makes the stock ALWAYS go up. If someone catches you, you'll go to jail. How much do you want to invest in it?",
     input: "number",
     inputAttributes: {
       autocapitalize: "off",

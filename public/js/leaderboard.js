@@ -113,7 +113,7 @@ async function investigate(user) {
 
     const { value, isConfirmed } = await Swal.fire({
       title: "Ok so what did this guy do",
-      text: "Spend $100 to investigate them and if they committed the crime recently then you'll get all their *cash*, put them in jail, and stop the crime.",
+      text: "Spend $100 to investigate them and if they committed the crime recently then you'll get all their *cash*, put them in jail, and stop the crime. Oh and you'll also get your $100 back plus $100 extra.",
       input: "select",
       inputOptions: {
         manipulation: "Market manipulation",
