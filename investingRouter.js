@@ -417,7 +417,7 @@ router.post("/manipulateStock/:id/:amount", (req, res) => {
   }
 
   const am = Math.round(Number(req.params.amount) / 10) * 10;
-  if (isNaN(am) || am < 10) {
+  if (isNaN(am) || am < 30) {
     res.status(400).send(`what are you tryna do`);
     return;
   }
@@ -425,6 +425,7 @@ router.post("/manipulateStock/:id/:amount", (req, res) => {
   stats = investingSF.getUserFromAuth(req.user);
   if (stats.spendingMoney < am) {
     res.status(400).send(`nah`);
+    return; // fixed.
   }
 
   investingSF.manipulateStock(req.user.id, req.params.id, am);

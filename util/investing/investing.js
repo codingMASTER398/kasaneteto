@@ -114,7 +114,12 @@ function cancelManipulateStock(userID, stock) {
 }
 
 function accuse(accuser, accused, accusedFor) {
-  if (!db.users[accuser] || !db.users[accused] || accuser == accused || db.users[accused].inJail)
+  if (
+    !db.users[accuser] ||
+    !db.users[accused] ||
+    accuser == accused ||
+    db.users[accused].inJail
+  )
     return {
       success: false,
     };
@@ -170,6 +175,16 @@ function sendMoney(A, B, amount) {
     db.users[B].cash += amount;
 
     getUserFromAuth({ id: B });
+
+    fetch(process.env.DISCORD_CRIME_WEBHOOK, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        content: `${db.users[A].name} just successfully laundered money and nobody noticed...`,
+      }),
+    });
   }, 30 * 60 * 1000);
 
   return;
@@ -317,8 +332,22 @@ async function pushUpdate() {
         // Multiple people can manipulate for max GAINS
         user.manipulating[id]--;
 
+        if (user.manipulating[id] == 0) {
+          fetch(process.env.DISCORD_CRIME_WEBHOOK, {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              content:
+                user.name +
+                ` just successfully manipulated and nobody noticed...`,
+            }),
+          });
+        }
+
         if (newPrice > db.rawData[id].currentPrice)
-          newPrice += (newPrice - db.rawData[id].currentPrice);
+          newPrice += newPrice - db.rawData[id].currentPrice;
         else
           newPrice =
             db.rawData[id].currentPrice +
@@ -411,7 +440,7 @@ module.exports = {
           name: u.name,
           beer: u.beer,
           id: u.id,
-          inJail: u.inJail
+          inJail: u.inJail,
         };
       })
       .sort((a, b) => b.worth - a.worth);
