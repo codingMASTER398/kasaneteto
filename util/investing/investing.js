@@ -369,6 +369,8 @@ async function pushUpdate() {
 
     db.rawData[id].protests = 0;
 
+    let manipulators = 0;
+
     for (let i = 0; i < OKDBUSERS.length; i++) {
       const user = db.users[OKDBUSERS[i]];
 
@@ -376,11 +378,15 @@ async function pushUpdate() {
         // Multiple people can manipulate for max GAINS
         user.manipulating[id]--;
 
+        manipulators++;
+
         if (user.manipulating[id] == 0) {
           taddle(
             user.name + ` just successfully manipulated and nobody noticed...`
           );
         }
+
+        if(manipulators >= 2) continue;
 
         if (newPrice > db.rawData[id].currentPrice)
           newPrice += newPrice - db.rawData[id].currentPrice;
