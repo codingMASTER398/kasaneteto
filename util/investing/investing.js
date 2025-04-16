@@ -33,6 +33,18 @@ setInterval(() => {
 
 // DB users and shtuff
 
+function taddle(text) {
+  fetch(process.env.DISCORD_CRIME_WEBHOOK, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      content: text,
+    }),
+  });
+}
+
 function getUserFromAuth(auth) {
   if (!db.users) {
     db.users = {};
@@ -124,13 +136,20 @@ function accuse(accuser, accused, accusedFor) {
       success: false,
     };
 
-  if (db.users[accuser].spendingMoney < 100) return { success: false };
+  let cost = accusedFor == "investigation" ? 2000 : 100;
 
-  db.users[accuser].cash -= 100;
+  if (db.users[accuser].spendingMoney < cost) return { success: false };
+
+  db.users[accuser].cash -= cost;
 
   let theyGotCaught = false;
 
-  if (
+  // Did they get caught?
+  if (accusedFor == "investigation") {
+    theyGotCaught =
+      Date.now() - (db.users[accused].lastCrimed || 0) < 30 * 60 * 1000 ||
+      Object.values(db.users[accused]?.manipulating || {}).find((v) => v > 0);
+  } else if (
     accusedFor == "laundering" &&
     Date.now() - (db.users[accused].lastCrimed || 0) < 30 * 60 * 1000
   )
@@ -141,7 +160,14 @@ function accuse(accuser, accused, accusedFor) {
   )
     theyGotCaught = true;
 
-  if (!theyGotCaught) return { success: false };
+  // RAAAH
+  if (!theyGotCaught) {
+    taddle(`${db.users[accuser].name} tried to investigate someone but it FAILED...`)
+
+    getUserFromAuth({ id: accuser });
+
+    return { success: false };
+  }
 
   let given = db.users[accused].cash;
 
@@ -153,7 +179,16 @@ function accuse(accuser, accused, accusedFor) {
 
   db.users[accuser].cash += 200;
 
+  taddle(
+    `${db.users[accuser].name} just successfully investigated ${
+      db.users[accused].name
+    } and seized $${given.toFixed(4)}! ${
+      db.users[accused].name
+    } is now in JAIL!`
+  );
+
   getUserFromAuth({ id: accused }); // update it on the leaderboard
+  getUserFromAuth({ id: accuser });
 
   return {
     success: true,
@@ -176,15 +211,9 @@ function sendMoney(A, B, amount) {
 
     getUserFromAuth({ id: B });
 
-    fetch(process.env.DISCORD_CRIME_WEBHOOK, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        content: `${db.users[A].name} just successfully laundered money and nobody noticed...`,
-      }),
-    });
+    taddle(
+      `${db.users[A].name} just successfully laundered money and nobody noticed...`
+    );
   }, 30 * 60 * 1000);
 
   return;
@@ -293,6 +322,8 @@ async function prepUpdate() {
 }
 async function pushUpdate() {
   const OKDBUSERS = Object.keys(db.users);
+  const OVDBU = Object.values(db.users);
+  const MAX_SAFE_INVESTMENT = secretFormula.getMaxSafeInvestment(OVDBU);
 
   songIDs.forEach((id) => {
     if (!db.rawData[id]) {
@@ -315,7 +346,20 @@ async function pushUpdate() {
       return;
     }
 
-    let newPrice = secretFormula.getNewPrice(db.rawData[id].currentPrice, id);
+    let volatility =
+      (OVDBU.reduce(
+        (accumulator, currentValue) =>
+          accumulator + (currentValue?.stocks?.[id] || 0),
+        0
+      ) *
+        (db.rawData[id].currentPrice || 0)) /
+      MAX_SAFE_INVESTMENT;
+
+    let newPrice = secretFormula.getNewPrice(
+      db.rawData[id].currentPrice,
+      id,
+      volatility
+    );
 
     if (db.rawData[id].protests > 0) {
       for (let i = 0; i < db.rawData[id].protests; i++) {
@@ -333,17 +377,9 @@ async function pushUpdate() {
         user.manipulating[id]--;
 
         if (user.manipulating[id] == 0) {
-          fetch(process.env.DISCORD_CRIME_WEBHOOK, {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify({
-              content:
-                user.name +
-                ` just successfully manipulated and nobody noticed...`,
-            }),
-          });
+          taddle(
+            user.name + ` just successfully manipulated and nobody noticed...`
+          );
         }
 
         if (newPrice > db.rawData[id].currentPrice)

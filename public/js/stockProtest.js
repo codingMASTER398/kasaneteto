@@ -1,4 +1,5 @@
 function protestStock(id) {
+  return;
   Swal.showLoading();
 
   fetch(`/invest/canProtest`).then(async (r) => {

@@ -221,7 +221,7 @@ socket.on("baseStocks", (s) => {
     tippy(manipulateButton, {
       content: `
       <p>ID: ${inv.id}</p>
-      <a onclick="protestStock('${inv.id}')">Protest stock</a><br>
+      <!--<a onclick="protestStock('${inv.id}')">Protest stock</a><br>-->
       <a onclick="manipulateStock('${inv.id}')">Manipulate stock</a><br>
       <a onclick="cancelManipulateStock('${inv.id}')">Cancel manipulation</a>`,
       allowHTML: true,

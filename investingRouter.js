@@ -362,6 +362,9 @@ router.get("/getStats", (req, res) => {
 });
 
 router.get("/canProtest", (req, res) => {
+  res.status(501).send("Removed")
+  return;
+
   if (!req.user) {
     res.status(403).send("Not logged in loser");
     return;
@@ -380,6 +383,9 @@ router.get("/canProtest", (req, res) => {
 });
 
 router.post("/protest/:id", (req, res) => {
+  res.status(501).send("Removed")
+  return;
+
   if (!req.user) {
     res.status(403).send("Not logged in loser");
     return;

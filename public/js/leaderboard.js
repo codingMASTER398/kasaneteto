@@ -96,18 +96,20 @@ async function payMoneyTo(user) {
 
 async function investigate(user) {
   try {
-    Swal.showLoading()
+    Swal.showLoading();
 
     const stats = await (await fetch(`/invest/getStats`)).json();
     let a = await (await fetch("/invest/stocksAndNames")).json();
-    Object.keys(a).forEach((aa)=>{a[aa] = aa})
+    Object.keys(a).forEach((aa) => {
+      a[aa] = aa;
+    });
 
-    if(stats.spendingMoney < 100) {
+    if (stats.spendingMoney < 100) {
       await Swal.fire({
         icon: "error",
         title: "errrm,",
-        text: "Investigating someone costs $100 in spending cash."
-      })
+        text: "Investigating someone costs $100 in spending cash.",
+      });
       return;
     }
 
@@ -118,17 +120,17 @@ async function investigate(user) {
       inputOptions: {
         manipulation: "Market manipulation",
         laundering: "Money laundering (sending money)",
+        investigation: "Full investigation ($2,000 actually)",
       },
-      inputPlaceholder: "Select a CRIME",
+      inputPlaceholder: "Investigate them for...",
       showCancelButton: true,
     });
 
-    if(!isConfirmed || !value) return;
+    if (!isConfirmed || !value) return;
 
     let stock;
 
-    
-    if(value == "manipulation") {
+    if (value == "manipulation") {
       const r = await Swal.fire({
         title: "What stock are they manipulating?",
         text: "You can get the stock ID in those little three dots thing",
@@ -138,46 +140,65 @@ async function investigate(user) {
         showCancelButton: true,
       });
 
-      if(!r.isConfirmed || !r.value) return;
+      if (!r.isConfirmed || !r.value) return;
 
       stock = r.value;
     }
 
+    if (value == "investigation" && stats.spendingMoney < 2000) {
+      await Swal.fire({
+        icon: "error",
+        title: "errrm,",
+        text: "Doing a full investsigation on someone costs $2,000 in spending cash.",
+      });
+      return;
+    }
+
     const real = await Swal.fire({
       icon: "question",
-      title: `Are you SURE you want to accuse them of ${stock ? `manipulating the stonk market?` : `money laundering`}?`,
-      text: "it costs like $100 spending money",
+      title:
+        value == "investigation"
+          ? `Are you SURE you want to launch a full investigation on this person? It'll catch them if they've recently money laundered or manipulated.`
+          : `Are you SURE you want to accuse them of ${
+              stock ? `manipulating the stonk market?` : `money laundering`
+            }?`,
+      text: `it costs like $${
+        value == "investigation" ? "2,000" : "100"
+      } spending money`,
       showCancelButton: true,
-    })
+    });
 
-    if(!real.isConfirmed) return;
+    if (!real.isConfirmed) return;
 
     Swal.showLoading();
 
-    fetch(`/invest/accuse/${user}/${stock || "laundering"}`, {
-      method: "POST"
-    }).then(async(r)=>{
+    fetch(`/invest/accuse/${user}/${stock || value}`, {
+      method: "POST",
+    }).then(async (r) => {
       const out = await r.json();
 
-      if(out.success) {
+      if (out.success) {
         await Swal.fire({
           icon: "success",
           title: "YOU DID IT!!!",
-          text: `They were, indeed, ${stock ? `manipulating the stonk market?` : `money laundering`}! You've claimed $${out.money.toFixed(4)} of their cash, and they are now in JAIL. You also stopped the crime!!1`
-        })
-        
-        window.location.reload()
+          text: `They were, indeed, ${
+            stock ? `manipulating the stonk market?` : (value == "investigation" ? "doing soemthing" : `money laundering`)
+          }! You've seized $${out.money.toFixed(
+            4
+          )} of their cash, and they are now in JAIL. You also stopped the crime!!1`,
+        });
+
+        window.location.reload();
       } else {
         await Swal.fire({
           icon: "error",
           title: "oh... that's false...",
-          text: `they weren't doing that...`
-        })
+          text: `they weren't doing that...`,
+        });
 
-        window.location.reload()
+        window.location.reload();
       }
-    })
-
+    });
   } catch (e) {
     Swal.fire({
       icon: "error",

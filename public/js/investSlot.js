@@ -65,7 +65,7 @@ socket.on("gambling", (slot) => {
     gambling = false;
     window.updateInvestSlot();
 
-    slotMachine.querySelector(`.price`).innerText = `MADE $${slot.payout}`;
+    slotMachine.querySelector(`h6`).innerText = `Big win! Got $${slot.payout}`;
 
     setTimeout(window.updateInvestSlot, 1000);
   }, 800);
