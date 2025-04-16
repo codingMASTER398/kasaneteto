@@ -238,7 +238,7 @@
   gap: 12px;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .leaderboard .user.jailed {
@@ -273,6 +273,8 @@
   background-color: #eee;
   border-radius: 3px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+
+  width: 470px;
 }
 
 .leaderboard .user p {
@@ -299,6 +301,8 @@
   background: #519e37;
   color: white;
   width: 120px;
+
+  flex-grow: 1;
 }
 .leaderboard .user .beer {
   background: goldenrod;
