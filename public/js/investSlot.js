@@ -1,7 +1,7 @@
 const beerMachine = document.querySelector(`.stock.beer`);
 const slotMachine = document.querySelector(`.stock.gambling`);
 const slotElements = [...slotMachine.querySelectorAll(`.slot`)];
-const symbols = ["🍒", "🍋", "🍇", "💰", "🔔", "🍀"];
+const symbols = ["🍒", "🍋", "🍇", "💰", "🔔", "🍀", "❌"];
 
 let gambling = false;
 
