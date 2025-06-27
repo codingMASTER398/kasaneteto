@@ -13,7 +13,7 @@ const path = require("path");
 const { createServer } = require("node:http");
 const investingRouter = investingEnabled ? require(`./investingRouter`) : false;
 const server = createServer(app);
-const cache = require("express-cache-ctrl");
+const serveStatic = require('serve-static')
 const { Server } = require("socket.io");
 const io = new Server(server);
 require(`dotenv`).config();
@@ -25,7 +25,11 @@ if (investingEnabled)
   investingRouter.updateSongs(tetoSongs, process.env.YOUTUBE_API_KEY, io);
 
 app.set("view engine", "ejs");
-app.use(cache.public("10m"), express.static("./public"));
+app.use(
+  serveStatic("./public", {
+    maxAge: '1d'
+  })
+);
 
 function getNumberWithOrdinal(n) {
   var s = ["th", "st", "nd", "rd"],
