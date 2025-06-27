@@ -22,17 +22,17 @@
 
 .stock.gambling {
   background: linear-gradient(rgba(96, 50, 52, 0.4), rgba(96, 50, 52, 0.4)),
-    url(/img/casino.jpg);
+    url(/imgcompress/casino.avif);
 }
 
 .stock.could {
   background: 
-    url(/img/could.png);
+    url(/imgcompress/could.avif);
 }
 
 .stock.beer {
   background: linear-gradient(rgba(96, 50, 52, 0.4), rgba(96, 50, 52, 0.4)),
-    url(/img/beer.jpg);
+    url(/imgcompress/beer.avif);
 }
 
 .stock[hiddenoverride="true"] {
@@ -107,7 +107,7 @@
   font-size: small;
   border: none;
   box-shadow: none;
-  font-family: "ZenKakuGothicNew";
+  font-family: "Zen Kaku Gothic New";
   font-weight: 900;
 }
 
@@ -196,7 +196,7 @@
   padding-right: 100px;
   z-index: 9999;
 
-  font-family: "NabalaRegular";
+  font-family: "Nabla";
   font-weight: 900;
   font-size: 4rem;
   filter: drop-shadow(0 0 4px black);
@@ -205,7 +205,7 @@
 }
 #money p,
 #nextUpdate p {
-  font-family: "ZenKakuGothicNew";
+  font-family: "Zen Kaku Gothic New";
   font-weight: 900;
   font-style: italic;
   color: gold;

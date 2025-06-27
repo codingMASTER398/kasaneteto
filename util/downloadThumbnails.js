@@ -1,5 +1,6 @@
 const fs = require(`fs`);
 const fetch = require(`node-fetch`);
+const sharp = require('sharp');
 
 async function downloadThumbnail(videoId, filename = "thumbnail.jpg") {
   try {
@@ -16,8 +17,12 @@ async function downloadThumbnail(videoId, filename = "thumbnail.jpg") {
     );
     response.body.pipe(fileStream);
 
-    fileStream.on("finish", () => {
-      console.log(`Thumbnail saved as ${filename}`);
+    fileStream.on("finish", async () => {
+      console.log(`Thumbnail saved as ${filename}, converting to AVIF`);
+
+      await sharp(`./public/img/songThumbnails/${filename}`)
+            .avif({ quality: 80 })
+            .toFile(`./public/imgcompress/songThumbnails/${filename}`.replace(".jpg", ".avif"));
     });
   } catch (e) {
     console.log(e)

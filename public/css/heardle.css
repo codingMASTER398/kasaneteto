@@ -1,0 +1,240 @@
+.playfield {
+  width: 100%;
+  max-width: 800px;
+}
+
+.guesses {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.guess {
+  width: 100%;
+  height: 3rem;
+  outline: 3px solid #ca4c5e;
+  background: rgba(202, 76, 94, 0.1);
+  display: flex;
+  align-items: center;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+  color: white;
+}
+.guess.ed {
+  background-color: rgba(202, 76, 94, 0.7);
+}
+
+.playerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  gap: 12px;
+}
+
+.playerWrapper .playButton {
+  aspect-ratio: 1/1;
+  height: 100%;
+  outline: 3px solid #ff6179;
+  border-radius: 500px;
+  background: #ff6179 url(/imgcompress/playButton.avif);
+  background-size: 28px;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: 0.1s;
+}
+
+.playerWrapper .playButton.disabled {
+  opacity: 0.5;
+}
+
+.playerWrapper .playButton.playing {
+  background: #ff6179 url(/imgcompress/stopButton.avif);
+  background-size: 28px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.playerWrapper .playButton:hover {
+  box-shadow: 0 10px 0 #ca4c5e;
+  transition: 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.playerWrapper .playButton:active {
+  box-shadow: none;
+  transform: translate(0, 10px);
+  transition: 0.1s;
+}
+
+.progress {
+  width: 100%;
+  height: 3rem;
+  outline: 3px solid #ff6179;
+  border-radius: 500px;
+  overflow: hidden;
+  position: relative;
+  background: rgba(202, 76, 94, 0.2);
+}
+
+.progress .fill {
+  height: 100%;
+  background-color: #d85468;
+  border-top-right-radius: 500px;
+  border-bottom-right-radius: 500px;
+  transition: 0.1s;
+  box-shadow: 0 -12px 12px rgba(255,255,255,0.2) inset;
+}
+
+.markers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+}
+
+.marker {
+  border-right: 3px solid #ff6179;
+  height: 100%;
+  border-radius: 500px;
+  box-shadow: 12px 0 12px rgba(255, 100, 123, 0.3);
+  margin: 0;
+}
+
+.bottom {
+  display: flex;
+  width: 100%;
+  height: 3rem;
+  gap: 12px;
+}
+
+.search {
+  flex-grow: 6;
+  height: 100%;
+  outline: 3px solid #ff6179;
+  background: rgba(202, 76, 94, 0.5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  box-sizing: border-box;
+  position: relative;
+
+  box-shadow: 0 -12px 12px rgba(255, 97, 121, 0.2) inset;
+  border-radius: 6px;
+}
+
+.search .textSuggestions {
+  position: absolute;
+  width: 100vw;
+  max-width: 800px;
+  top: 0;
+  left: 0;
+  transform: translate(0, -100%);
+
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -12px 24px 6px rgba(0, 0, 0, 0.2);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.search .textSuggestions.bounce {
+  animation: bounce 0.05s forwards;
+}
+@keyframes bounce {
+  0% {
+    transform: translate(0, -90%);
+  }
+}
+
+.search .textSuggestions div {
+  background-color: #ca4c5e;
+  text-align: left;
+  padding: 6px;
+  border-bottom: 1px solid #ff6179;
+  color: white;
+  padding-left: 12px;
+  padding-right: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+}
+
+.search .textSuggestions div img {
+  aspect-ratio: 16/9;
+  height: 40px;
+  width: 70px;
+  margin-right: 6px;
+  border-radius: 6px;
+}
+
+.search .textSuggestions div:hover {
+  background-color: #d85468;
+}
+
+.search .textSuggestions div:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.search .textSuggestions div:last-child {
+  box-shadow: 0 -12px 12px rgba(0, 0, 0, 0.2) inset;
+}
+
+.searchBox {
+  width: calc(100% - 34px);
+  margin: 0;
+  height: calc(100% - 3px);
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-family: "Zen Kaku Gothic New";
+  font-weight: 900;
+  appearance: none;
+  outline: none;
+  font-size: large;
+}
+.search img {
+  width: 34px;
+  aspect-ratio: 1/1;
+}
+
+.bottom button {
+  flex-grow: 1;
+  height: 100%;
+  background-color: #ff6179;
+  color: black;
+  font-weight: 900;
+  font-size: large;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: none;
+  margin: 0;
+}
+
+.bottom button.check:not(:disabled) {
+  box-shadow: 0 0 48px 6px #ff6179, 0 0 6px rgba(0, 0, 0, 0.3) inset,
+    0 6px 0 #ca4c5e;
+}
+.bottom button.check:disabled {
+  opacity: 0.8;
+}
+
+iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../../components/head') -%>
+
+    <link rel="stylesheet" href="/css/investo.css" />
+
+    <title>Kasane Investo</title>
+    <meta name="description" content="kasane investo" />
+    <meta
+      property="og:description"
+      content="INVEST in your favourite KASANE TETO songs using REAL POPULARITY DATA! Start with $500< and use INSIDER TRADING and MONEY LAUNDERING to get to the top of the LEADERBOARD!!!"
+    />
+    <meta property="og:title" content="kasane investo" />
+  </head>
+  <body class="investing">
+    <%- include('../../components/titlebar') -%>
+
+    <script>
+      document.querySelector(`navigation .invest`).classList.add("selected");
+    </script>
+
+    <div id="nextUpdate"></div>
+    <div id="money"></div>
+
+    <div class="mainContentPad">
+      <div class="center">
+        <img
+          src="/imgcompress/kasaneInvesto.avif"
+          alt="Kasane Investo"
+          style="max-width: 100%"
+        />
+        <p>ALERT! The game was really broken because SOMEBODY gambled a little too much and it was rigged the wrong way so. reset. sorry ):</p>
+        <p>
+          INVEST in your favourite KASANE TETO songs using
+          <b><i>REAL</i></b> POPULARITY DATA!! Also
+          <a target="_blank" style="font-weight: 900" href="/invest/leaderboard"
+            >LEADERBOARD!!!</a
+          >
+        </p>
+        <p>
+          BORED whilst waiting for stock updates?? Open a new tab of
+          <a target="_blank" href="/rank" style="font-weight: 900"
+            >RANKING Kasane Teto songs!</a
+          >
+        </p>
+        <p>
+          <a style="font-size: x-large; font-weight: bold" href="/invest/how"
+            >HOW DO I PLAY???!</a
+          >
+          also
+          <a
+            style="font-size: x-large; font-weight: bold"
+            target="_blank"
+            href="https://discord.gg/yAeuJDKZ3C"
+            >JOIN THE DISCORD!!</a
+          >
+        </p>
+        <br />
+        <br />
+
+        <div class="filters">
+          <p>
+            Filters: <input type="checkbox" class="owned" /> owned
+            <input type="checkbox" class="onlyUp" /> only up, buy mult:
+            <input type="number" step="1" min="1" value="1" class="buyMult" />,
+            sell mult:
+            <input type="number" step="1" min="1" value="1" class="sellMult" />,
+            graph range:
+            <select id="graphRange" value="day">
+              <option value="day">Day</option>
+              <option value="month">Month</option>
+              <option value="ever">Ever</option>
+            </select>
+          </p>
+        </div>
+
+        <h3>Spending items</h3>
+        <div class="investmentsHolder">
+          <div
+            class="stock could"
+            style="background: url(/imgcompress/could.avif)"
+          ></div>
+          <div class="stock gambling">
+            <h6>Slot machine! Big win!</h6>
+            <div class="slots">
+              <div class="slot">🍇</div>
+              <div class="slot">🍇</div>
+              <div class="slot">🍇</div>
+            </div>
+            <div class="priceWrapper">
+              <p class="price">LOADING</p>
+              <div class="buttonWrapper">
+                <button class="buyButton">GAMBLE</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="stock beer">
+            <h6>beer at the pub status symbol</h6>
+            <div style="height: 65px">(shows on the leaderboard)</div>
+
+            <div class="priceWrapper">
+              <p class="price">SP$100</p>
+              <div class="buttonWrapper">
+                <button class="buyButton">GET DRUNK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>Stocks</h3>
+
+        <div class="investmentsHolder stocks">
+          <h1>LOADING...</h1>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/echarts.min.js"></script>
+    <script src="/js/investHome.js"></script>
+    <script src="/js/investSlot.js"></script>
+    <script src="/js/stockProtest.js"></script>
+
+    <%- include('../../components/bottom') -%>
+  </body>
+</html>

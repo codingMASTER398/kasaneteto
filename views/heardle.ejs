@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../components/head') -%>
+
+    <link rel="stylesheet" href="/css/heardle.css" />
+
+    <title>Kasane Teto Heardle</title>
+    <meta name="description" content="kasanete.to - Kasane Teto Heardle" />
+    <meta property="og:title" content="Kasane Teto Heardle" />
+    <meta property="og:description" content="Kasane Teto Heardle" />
+  </head>
+  <body>
+    <%- include('../components/titlebar') -%>
+
+    <div class="mainContentPad">
+      <div class="center">
+        <h1>
+          <a href="/" style="color: rgb(235, 97, 123)">Kasane Teto</a> Heardle
+          <sparkle>✨</sparkle>
+        </h1>
+        <p>Can you guess the Kasane Teto song? :3</p>
+        <div class="playfieldWrapper centerFlex">
+          <div class="playfield">
+            <div class="guesses">
+              <div class="guess"> </div>
+              <div class="guess"></div>
+              <div class="guess"></div>
+              <div class="guess"></div>
+              <div class="guess"></div>
+              <div class="guess"></div>
+            </div>
+            <br />
+            <div class="playerWrapper">
+              <div class="playButton disabled"></div>
+              <div class="progress">
+                <div class="fill" style="width: 0%"></div>
+                <div class="markers">
+                  <div class="marker" style="flex-grow: 1"></div>
+                  <div class="marker" style="flex-grow: 1"></div>
+                  <div class="marker" style="flex-grow: 2"></div>
+                  <div class="marker" style="flex-grow: 3"></div>
+                  <div class="marker" style="flex-grow: 4"></div>
+                  <div class="marker" style="flex-grow: 5"></div>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="bottom">
+              <div class="search">
+                <img src="/imgcompress/searchIcon.avif" />
+                <input class="searchBox" type="text" />
+
+                <div class="textSuggestions" style="display: none;">
+                  <div>Text here</div>
+                  <div>Text here</div>
+                  <div>Text here</div>
+                  <div>Text here</div>
+                  <div>Text here</div>
+                </div>
+              </div>
+
+              <button class="check" disabled>CHECK</button>
+              <button class="skip">SKIP (+1s)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.querySelector(`navigation .heardle`).classList.add("selected");
+      const songs = <%-JSON.stringify(tetoSongs)%>;
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.2/dist/umd/index.min.js"></script>
+    <script src="/js/heardle.js"></script>
+
+    <%- include('../components/bottom') -%>
+  </body>
+</html>

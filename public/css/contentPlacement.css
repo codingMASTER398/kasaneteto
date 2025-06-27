@@ -141,7 +141,7 @@ a.visited {
   align-items: center;
 }
 
-input[type="text"], select:not(#graphRange), button:not(.buyButton, .sellButton, .manipulateButton, .swal2-styled) {
+input[type="text"]:not(.searchBox), select:not(#graphRange), button:not(.buyButton, .sellButton, .manipulateButton, .swal2-styled) {
   padding: 12px;
   padding-left: 24px;
   padding-right: 24px;
@@ -150,7 +150,7 @@ input[type="text"], select:not(#graphRange), button:not(.buyButton, .sellButton,
   border: none;
   border-radius: 6px;
   box-shadow: 0 0 6px rgba(0,0,0,0.3) inset;
-  font-family: "ZenKakuGothicNew";
+  font-family: "Zen Kaku Gothic New";
   font-weight: 700;
 }
 

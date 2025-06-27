@@ -1,4 +1,5 @@
 const { execSync } = require("child_process");
+const fs = require(`fs`)
 
 const playlistUrls = [
   "https://music.youtube.com/playlist?list=PL1dGKN09sRtU299Em9Vil5lYeMDUJSzK1", // big one
@@ -14,7 +15,55 @@ const playlistUrls = [
 const excludeList =
   "https://music.youtube.com/browse/VLPLlBxB5S0GPa__rzwVGnrsz33akM1qJelO";
 
-module.exports = () => {
+const s = JSON.parse(
+  fs.readFileSync(`./util/kasaneTetoSongs.json`, "utf-8").toString()
+);
+const tetoSongsBefore = s;
+
+function replaceDetailsVocaDB(details) {
+  return new Promise((resolve) => {
+    details.vdbFetched = true;
+
+    console.log(`VocaDB fetching for ${details.id}`)
+
+    fetch(
+      `https://vocadb.net/api/songs/byPv?pvService=Youtube&pvId=${details.id}&fields=AdditionalNames`,
+      {
+        headers: {
+          Accept: "Application/JSON",
+        },
+      }
+    )
+      .then(async (r) => {
+        if (r.status != 200) {
+          console.log(await r.text());
+          resolve(details);
+          return;
+        }
+
+        const text = await r.text();
+        if (text == "null" || !text) {
+          console.log("No vocaDB found for ", details);
+          resolve(details);
+          return;
+        }
+
+        const json = JSON.parse(text);
+        details.title = json.defaultName;
+        details.author = json.artistString;
+
+        if(json.additionalNames) details.title += " " + json.additionalNames
+
+        resolve(details)
+      })
+      .catch((e) => {
+        console.error(e);
+        resolve(details);
+      });
+  });
+}
+
+module.exports = async () => {
   const excludes = JSON.parse(
     execSync(`yt-dlp --flat-playlist -J "${excludeList}"`).toString()
   ).entries.map((v) => {
@@ -56,16 +105,31 @@ module.exports = () => {
     console.log(`Loaded ${playlistUrls[i]}, ${i + 1}/${playlistUrls.length}`);
   }
 
+  // Do a big vocadb transfer
+  for (let i = 0; i < allVideos.length; i++) {
+    const found = tetoSongsBefore.find((a)=>a.id == allVideos[i].id && a.vdbFetched);
+
+    if(found) {
+      console.log(`Already voca-voca'd ${allVideos[i].id}`)
+      allVideos[i] = found
+      allVideos[i].author = allVideos[i].author.replace("feat. 重音テト SV", "").replace("feat. 重音テトSV", "").replace("重音テトSV", "").replace("重音テト", "").replace("feat. ", "").replace("feat.", "").trim();
+      continue;
+    };
+
+    allVideos[i] = await replaceDetailsVocaDB(allVideos[i])
+  }
+
   // Write the whole array
+  console.log("Writing")
 
   try {
-    require(`fs`).writeFileSync(
+    fs.writeFileSync(
       `./util/kasaneTetoSongs.json`,
       JSON.stringify(allVideos)
     );
   } catch {}
   try {
-    require(`fs`).writeFileSync(
+    fs.writeFileSync(
       `./kasaneTetoSongs.json`,
       JSON.stringify(allVideos)
     );

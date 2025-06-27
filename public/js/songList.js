@@ -31,7 +31,7 @@ songs.sort((a, b) => (b.vote || 0) - (a.vote || 0)).forEach((song, i) => {
   title.href = song.url;
 
   const thumb = document.createElement(`img`);
-  thumb.src = "/img/songThumbnails/" + song.id + ".jpg";
+  thumb.src = "/imgcompress/songThumbnails/" + song.id + ".avif";
   thumb.setAttribute("loading", "lazy");
 
   const vote = document.createElement(`p`)

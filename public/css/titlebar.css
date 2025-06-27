@@ -1,5 +1,5 @@
 body{
-  font-family: "ZenKakuGothicNew";
+  font-family: "Zen Kaku Gothic New";
   background: linea;
 
   margin-top: 2rem;
@@ -38,7 +38,7 @@ navigation img.logo{
 }
 
 body.tetoDay navigation img.logo{
-  content: url("/img/logo0401.webp");
+  content: url("/imgcompress/logo0401.avif");
 }
 
 navigation a:has(img) {

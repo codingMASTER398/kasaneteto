@@ -137,7 +137,7 @@ socket.on("baseStocks", (s) => {
     element.style.background = `linear-gradient(
       rgba(96, 50, 52, 0.4), 
       rgba(96, 50, 52, 0.4)
-    ), url("/img/songThumbnails/${inv.id == "GDP" ? "../GDP" : inv.id}.jpg")`;
+    ), url("/imgcompress/songThumbnails/${inv.id == "GDP" ? "../GDP" : inv.id}.avif")`;
 
     element.style.display = "none";
 
@@ -447,7 +447,7 @@ function formatTime(seconds) {
 
 function explosionClick(event, buy) {
   const boom = document.createElement("img");
-  boom.src = buy ? `/img/confetti.png` : `/img/explosion.png`;
+  boom.src = buy ? `/imgcompress/confetti.avif` : `/imgcompress/explosion.avif`;
   boom.classList.add("boom");
   boom.style.left =
     event.pageX - (buy ? 200 : 100) + (Math.random() * 60 - 30) + "px";

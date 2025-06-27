@@ -1,3 +1,8 @@
+// CONFIG
+const investingEnabled = true;
+
+//
+require(`./util/imageCompressor.js`);
 const express = require(`express`);
 const app = express();
 const utilsPlaylist = require(`./util/playlist`);
@@ -6,8 +11,9 @@ const fs = require(`fs`);
 const { spawn } = require("child_process");
 const path = require("path");
 const { createServer } = require("node:http");
-const investingRouter = require(`./investingRouter`);
+const investingRouter = investingEnabled ? require(`./investingRouter`) : false;
 const server = createServer(app);
+const cache = require("express-cache-ctrl");
 const { Server } = require("socket.io");
 const io = new Server(server);
 require(`dotenv`).config();
@@ -15,10 +21,11 @@ require(`dotenv`).config();
 let tetoSongs = require(`./util/kasaneTetoSongs.json`);
 
 rankRouter.updateSongs(tetoSongs);
-investingRouter.updateSongs(tetoSongs, process.env.YOUTUBE_API_KEY, io);
+if (investingEnabled)
+  investingRouter.updateSongs(tetoSongs, process.env.YOUTUBE_API_KEY, io);
 
 app.set("view engine", "ejs");
-app.use(express.static("./public"));
+app.use(cache.public("10m"), express.static("./public"));
 
 function getNumberWithOrdinal(n) {
   var s = ["th", "st", "nd", "rd"],
@@ -41,10 +48,12 @@ function refreshTetoSongs() {
   child.on("error", (err) => console.error("Child Process Error:", err));
 
   child.on("exit", (code) => {
-    const s = JSON.parse(fs.readFileSync(`./util/kasaneTetoSongs.json`, "utf-8").toString());
+    const s = JSON.parse(
+      fs.readFileSync(`./util/kasaneTetoSongs.json`, "utf-8").toString()
+    );
     tetoSongs = s;
     rankRouter.updateSongs(tetoSongs);
-    investingRouter.updateSongs(tetoSongs);
+    if (investingEnabled) investingRouter.updateSongs(tetoSongs);
 
     console.log("UPdated??");
   });
@@ -85,7 +94,22 @@ app.get("/rank", (req, res) => {
 });
 
 app.use("/rankRouter", rankRouter.router);
-app.use("/invest", investingRouter.router);
+
+if (investingEnabled) {
+  app.use("/invest", investingRouter.router);
+} else {
+  app.use("/invest", (req, res) => {
+    res.render("investo/investOff.ejs", {});
+  });
+}
+
+app.use(`/heardleSongClips`, express.static("./heardleSongs"));
+
+app.get("/heardle", (req, res) => {
+  res.render("heardle.ejs", {
+    tetoSongs,
+  });
+});
 
 setInterval(refreshTetoSongs, 10 * 60_000); // 10 minutes
 //refreshTetoSongs();

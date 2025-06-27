@@ -34,7 +34,7 @@
 @media only screen and (max-width: 1000px) { 
   /* Jarvis, we are on mobile */
   .heroBanner {
-    content: url("/img/mobileVariant/banner.png");
+    content: url("/imgcompress/mobileVariant/banner.avif");
   }
 
   /* Reading aside (hero too) */

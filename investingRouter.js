@@ -286,7 +286,7 @@ router.use(async (req, res, next) => {
             return;
           }
 
-          res.render(`inJail`);
+          res.render(`investo/inJail`);
           return;
         }
 
@@ -300,26 +300,26 @@ router.use(async (req, res, next) => {
 
 router.get("/", (req, res) => {
   if (!req.user) {
-    res.render("investLogin.ejs", {
+    res.render("investo/investLogin.ejs", {
       URL: process.env.URL + "invest/wawaworld",
     });
     return;
   }
 
-  res.render("investHome.ejs", {
+  res.render("investo/investHome.ejs", {
     username: req.user.name,
   });
 });
 
 router.get("/leaderboard", (req, res) => {
   if (!req.user) {
-    res.render("investLogin.ejs", {
+    res.render("investo/investLogin.ejs", {
       URL: process.env.URL + "invest/wawaworld",
     });
     return;
   }
 
-  res.render("investLeaderboard.ejs", {
+  res.render("investo/investLeaderboard.ejs", {
     leaderboard: investingSF.getLBData(),
     formatMoney: (num) => {
       return num.toLocaleString("en-US", {
@@ -337,7 +337,7 @@ router.get("/stocksAndNames", (req, res) => {
 });
 
 router.get("/how", (req, res) => {
-  res.render(`investingHow`);
+  res.render(`investo/investingHow`);
 });
 
 router.post("/changeUsername/:username", (req, res) => {
