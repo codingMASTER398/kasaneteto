@@ -37,7 +37,7 @@ module.exports = () => {
     console.log(song.id);
 
     // Check if it already exists
-    if (fs.existsSync(`./public/img/songThumbnails/${song.id}.jpg`)) continue;
+    if (fs.existsSync(`./public/imgcompress/songThumbnails/${song.id}.avif`)) continue;
 
     // Download the thumbnail
     downloadThumbnail(song.id, song.id + ".jpg");

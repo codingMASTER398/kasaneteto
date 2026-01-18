@@ -2,6 +2,7 @@ node_modules
 db
 dbb
 public/img/songThumbnails
+public/imgcompress/songThumbnails
 util/kasaneTetoSongs.json
 util/investing/secretFormula.js
 util/investing/secretFormula.js.old
