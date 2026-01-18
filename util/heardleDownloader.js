@@ -53,8 +53,9 @@ const sleep = (t) => new Promise((r) => setTimeout(r, t));
     if (fs.existsSync(`./heardleSongs/${song.id}.ogg`)) {
       continue;
     } else {
+      await sleep(3000)
       downloadFirst16s(song.url, song.id)
-      await sleep(1000)
+      await sleep(3000)
     }
   }
 })();
