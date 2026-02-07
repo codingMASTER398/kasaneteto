@@ -107,13 +107,18 @@ if (investingEnabled) {
   });
 }
 
+/*
 app.use(`/heardleSongClips`, express.static("./heardleSongs"));
 
 app.get("/heardle", (req, res) => {
   res.render("heardle.ejs", {
     tetoSongs,
   });
-});
+});*/
+
+app.get("/heardle", (req, res) => {
+  res.status(404).send(`Heardle has been removed since it wasn't that fun anyway & had high maintenance`)
+})
 
 setInterval(refreshTetoSongs, 10 * 60_000); // 10 minutes
 //refreshTetoSongs();
