@@ -12,10 +12,10 @@ try {
 }
 
 function writeDb() {
-  fs.writeFile(`./db/votes.json`, JSON.stringify(db), "utf-8", () => {
-    fs.writeFile(`./dbb/votes.json`, JSON.stringify(db), "utf-8", () => {});
+  fs.writeFile(`./db/votes.json`, JSON.stringify(db), () => {
+    fs.writeFile(`./dbb/votes.json`, JSON.stringify(db), () => {});
   });
-  fs.writeFile(`./dbbb/votes.json`, JSON.stringify(db), "utf-8", () => {});
+  fs.writeFile(`./dbbb/votes.json`, JSON.stringify(db), () => {});
 }
 
 setInterval(writeDb, 10_000);

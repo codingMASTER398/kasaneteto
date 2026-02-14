@@ -18,13 +18,11 @@ setInterval(() => {
   fs.writeFile(
     workingDir + `/db/invest.json`,
     JSON.stringify(db),
-    "utf-8",
     () => {
       console.log("Wrote one");
       fs.writeFile(
         workingDir + `/dbb/invest.json`,
         JSON.stringify(db),
-        "utf-8",
         () => {},
       );
     },
@@ -35,7 +33,6 @@ setInterval(() => {
       fs.writeFile(
         workingDir + `/dbb/invest.json`,
         JSON.stringify(db),
-        "utf-8",
       );
     }, 10_000);
   } catch {}
