@@ -31,8 +31,9 @@ setInterval(() => {
   try {
     setTimeout(() => {
       fs.writeFile(
-        workingDir + `/dbb/invest.json`,
+        workingDir + `/dbbb/invest.json`,
         JSON.stringify(db),
+        ()=>{}
       );
     }, 10_000);
   } catch {}
