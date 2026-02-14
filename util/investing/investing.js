@@ -32,7 +32,6 @@ setInterval(() => {
 
   try {
     setTimeout(() => {
-      fs.mkdirSync("./dbbb");
       fs.writeFile(
         workingDir + `/dbb/invest.json`,
         JSON.stringify(db),

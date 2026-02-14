@@ -15,9 +15,6 @@ function writeDb() {
   fs.writeFile(`./db/votes.json`, JSON.stringify(db), "utf-8", () => {
     fs.writeFile(`./dbb/votes.json`, JSON.stringify(db), "utf-8", () => {});
   });
-  try {
-    fs.mkdirSync("./dbbb");
-  } catch {}
   fs.writeFile(`./dbbb/votes.json`, JSON.stringify(db), "utf-8", () => {});
 }
 
