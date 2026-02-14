@@ -25,10 +25,21 @@ setInterval(() => {
         workingDir + `/dbb/invest.json`,
         JSON.stringify(db),
         "utf-8",
-        () => {}
+        () => {},
       );
-    }
+    },
   );
+
+  try {
+    setTimeout(() => {
+      fs.mkdirSync("./dbbb");
+      fs.writeFile(
+        workingDir + `/dbb/invest.json`,
+        JSON.stringify(db),
+        "utf-8",
+      );
+    }, 10_000);
+  } catch {}
 }, 30_000);
 
 // DB users and shtuff
@@ -72,7 +83,7 @@ function getUserFromAuth(auth) {
     db.users[auth.id].cash + db.users[auth.id].lastShareCash - 500;
   db.users[auth.id].spendingMoney = Math.max(
     0,
-    Math.min(maxSpendAmount, db.users[auth.id].cash)
+    Math.min(maxSpendAmount, db.users[auth.id].cash),
   );
 
   return db.users[auth.id];
@@ -162,7 +173,9 @@ function accuse(accuser, accused, accusedFor) {
 
   // RAAAH
   if (!theyGotCaught) {
-    taddle(`${db.users[accuser].name} tried to investigate someone but it FAILED...`)
+    taddle(
+      `${db.users[accuser].name} tried to investigate someone but it FAILED...`,
+    );
 
     getUserFromAuth({ id: accuser });
 
@@ -184,7 +197,7 @@ function accuse(accuser, accused, accusedFor) {
       db.users[accused].name
     } and seized $${given.toFixed(4)}! ${
       db.users[accused].name
-    } is now in JAIL!`
+    } is now in JAIL!`,
   );
 
   getUserFromAuth({ id: accused }); // update it on the leaderboard
@@ -204,17 +217,20 @@ function sendMoney(A, B, amount) {
   db.users[A].cash -= amount;
   db.users[A].lastCrimed = Date.now();
 
-  setTimeout(() => {
-    if ((db.users[A]?.lastCaught || 0) > db.users[A].lastCrimed) return;
+  setTimeout(
+    () => {
+      if ((db.users[A]?.lastCaught || 0) > db.users[A].lastCrimed) return;
 
-    db.users[B].cash += amount;
+      db.users[B].cash += amount;
 
-    getUserFromAuth({ id: B });
+      getUserFromAuth({ id: B });
 
-    taddle(
-      `${db.users[A].name} just successfully laundered money and nobody noticed...`
-    );
-  }, 30 * 60 * 1000);
+      taddle(
+        `${db.users[A].name} just successfully laundered money and nobody noticed...`,
+      );
+    },
+    30 * 60 * 1000,
+  );
 
   return;
 }
@@ -350,7 +366,7 @@ async function pushUpdate() {
       (OVDBU.reduce(
         (accumulator, currentValue) =>
           accumulator + (currentValue?.stocks?.[id] || 0),
-        0
+        0,
       ) *
         (db.rawData[id].currentPrice || 0)) /
       MAX_SAFE_INVESTMENT;
@@ -358,7 +374,7 @@ async function pushUpdate() {
     let newPrice = secretFormula.getNewPrice(
       db.rawData[id].currentPrice,
       id,
-      volatility
+      volatility,
     );
 
     if (db.rawData[id].protests > 0) {
@@ -370,7 +386,7 @@ async function pushUpdate() {
     db.rawData[id].protests = 0;
 
     let manipulators = 0;
-    let initialNewPrice = newPrice
+    let initialNewPrice = newPrice;
 
     for (let i = 0; i < OKDBUSERS.length; i++) {
       const user = db.users[OKDBUSERS[i]];
@@ -383,13 +399,14 @@ async function pushUpdate() {
 
         if (user.manipulating[id] == 0) {
           taddle(
-            user.name + ` just successfully manipulated and nobody noticed...`
+            user.name + ` just successfully manipulated and nobody noticed...`,
           );
         }
 
-        if(manipulators >= 2) { // oops!
+        if (manipulators >= 2) {
+          // oops!
           newPrice -= newPrice - db.rawData[id].currentPrice;
-        };
+        }
 
         if (newPrice > db.rawData[id].currentPrice)
           newPrice += newPrice - db.rawData[id].currentPrice;
