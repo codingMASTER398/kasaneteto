@@ -13,10 +13,9 @@ body.tetoDay {
 }
 
 body.investing {
-  background: url("/imgcompress/moneyBG.avif"), url("/imgcompress/moneyBG.avif") repeat-x,
-    url("/imgcompress/moneyBG.avif") repeat-y;
+  background: url("/imgcompress/moneyBG.avif"), url("/imgcompress/moneyBG.avif") repeat;
   background-color: rgba(238, 230, 230, 1);
-  background-size: cover !important;
+  background-size: 100% !important;
 }
 
 body::before {

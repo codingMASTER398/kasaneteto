@@ -430,6 +430,10 @@ async function pushUpdate() {
       db.rawData[id].month.push(priceWithDate);
     }
 
+    while(db.rawData[id].month.length > 30) {
+      db.rawData[id].month.shift();
+    }
+
     db.rawData[id].monthAgg++;
     if (db.rawData[id].monthAgg >= 144 * 15) {
       db.rawData[id].monthAgg = 0;
